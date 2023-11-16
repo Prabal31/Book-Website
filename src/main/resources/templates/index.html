@@ -26,7 +26,6 @@
       padding: 1em 0;
     }
 
-
     section {
       max-width: 800px;
       margin: 20px auto;
@@ -43,13 +42,12 @@
     }
 
     .book-list {
-      display: flex;
-      flex-wrap: wrap;
+      /* Removed display: flex; and justify-content: center; */
     }
 
     .book-item {
-      width: calc(33.33% - 20px);
-      margin: 10px;
+      width: 100%; /* Each book item takes the full width */
+      margin-bottom: 20px; /* Added margin for better separation */
       padding: 15px;
       background-color: #fff;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -69,51 +67,53 @@
       margin-bottom: 10px;
     }
 
-    a {
-      display: inline-block;
-      padding: 5px 10px;
+    form {
+      display: flex;
+      justify-content: flex-end; /* Align the button to the right within the form */
+    }
+
+    .add-to-cart-btn {
       background-color: #4285f4;
       color: #fff;
-      text-decoration: none;
+      border: none;
+      padding: 5px 10px;
       border-radius: 3px;
       transition: background-color 0.3s;
     }
 
-    a:hover {
+    .add-to-cart-btn:hover {
       background-color: #1c4de9;
     }
   </style>
 
 </head>
-  <body>
+<body>
 
-  <header>
-    <h1>Bookstore</h1>
-    <div class="cart">
-      <a href="/cart">View Cart</a>
-    </div>
-  </header>
+<header>
+  <h1>Bookstore</h1>
+  <div class="cart">
+    <a href="/cart">View Cart</a>
+  </div>
+</header>
 
-
-
-  <section>
-    <h2>Book List</h2>
-    <div>
-      <!-- Thymeleaf iteration for displaying books -->
-      <div th:each="book : ${bookList}">
-        <div class="book-item">
-          <h3 th:text="${book.id}"></h3>
-          <h3 th:text="${book.title}"></h3>
-          <p th:text="${book.author}"></p>
-          <p th:text="${'ISBN: ' + book.ISBN}"></p>
-          <p th:text="${'Price: $' + book.price}"></p>
-          <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
-            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-          </form>
-        </div>
+<section>
+  <h2>Book List</h2>
+  <div class="book-list">
+    <!-- Thymeleaf iteration for displaying books -->
+    <div th:each="book : ${bookList}">
+      <div class="book-item">
+        <h3 th:text="${book.id}"></h3>
+        <h3 th:text="${book.title}"></h3>
+        <p th:text="${book.author}"></p>
+        <p th:text="${'ISBN: ' + book.ISBN}"></p>
+        <p th:text="${'Price: $' + book.price}"></p>
+        <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
+          <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  </body>
+</body>
 </html>
