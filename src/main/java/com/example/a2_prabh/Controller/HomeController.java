@@ -24,7 +24,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String Books(Model model) {
-        List<Book> bookList =da.getbook();
         model.addAttribute("bookList", da.getbook());
         return "book";
     }
@@ -65,8 +64,8 @@ public class HomeController {
 
     @GetMapping("/Checkout")
     public String showCheckoutPage() {
-        // Logic to prepare data if needed
-        return "Checkout"; // Assuming "checkout" is the name of your Thymeleaf template
+        da.deleteCart();
+        return "Checkout";
     }
 
 

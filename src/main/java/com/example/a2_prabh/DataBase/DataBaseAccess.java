@@ -58,11 +58,16 @@ public class DataBaseAccess {
 
 
     public void deleteCart(String title) {
-        System.out.println("LOL");
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 
         String query = "DELETE FROM cart where title = :title";
         namedParameters.addValue("title", title);
+        jdbc.update(query, namedParameters);
+    }
+    public void deleteCart() {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+
+        String query = "DELETE FROM cart ";
         jdbc.update(query, namedParameters);
     }
 }
