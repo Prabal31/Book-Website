@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,7 +26,7 @@ public class HomeController {
     public String Books(Model model) {
         List<Book> bookList =da.getbook();
         model.addAttribute("bookList", da.getbook());
-        return "index";
+        return "book";
     }
 
     @PostMapping("/addToCart/{id}")
