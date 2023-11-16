@@ -21,4 +21,28 @@ public class DataBaseAccess {
         System.out.println("Executing query: " + query);
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
+
+    public Book getBookByID(int id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM books WHERE id = :id";
+        namedParameters.addValue("id", id);
+        List<Book> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    public void insertBookInCart(Book book) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "INSERT INTO cart(title,author,isbn,price,description) VALUES (:title,:author,:isbn,:price,:description)";
+
+        namedParameters.addValue("title", book.getTitle());
+        namedParameters.addValue("author", book.getAuthor());
+        namedParameters.addValue("isbn", book.getISBN());
+        namedParameters.addValue("price", book.getPrice());
+        namedParameters.addValue("description", book.getDescription());
+
+        int rowsAffected = jdbc.update(query, namedParameters);
+        if (rowsAffected > 0) {
+            System.out.println("book inserted into database cart");
+        }
+    }
 }
