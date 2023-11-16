@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Book List</title>
+
+  <style>
+    /* Advanced CSS styles go here */
+    body, h1, h2, p, a {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #4285f4;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    section {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart {
+      text-align: right;
+      padding: 10px;
+      background-color: #4285f4;
+      color: #fff;
+    }
+
+    .book-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .book-item {
+      width: calc(33.33% - 20px);
+      margin: 10px;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .book-item:hover {
+      transform: scale(1.05);
+    }
+
+    h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #4285f4;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    a:hover {
+      background-color: #1c4de9;
+    }
+  </style>
+
+</head>
+  <body>
+
+  <header>
+    <h1>Bookstore</h1>
+    <div class="cart">
+      <a href="/cart">View Cart</a>
+    </div>
+  </header>
+
+
+
+  <section>
+    <h2>Book List</h2>
+    <div>
+      <!-- Thymeleaf iteration for displaying books -->
+      <div th:each="book : ${bookList}">
+        <div class="book-item">
+          <h3 th:text="${book.id}"></h3>
+          <h3 th:text="${book.title}"></h3>
+          <p th:text="${book.author}"></p>
+          <p th:text="${'ISBN: ' + book.ISBN}"></p>
+          <p th:text="${'Price: $' + book.price}"></p>
+          <button class="add-to-cart-btn" th:attr="data-book-id=${book.id}">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </body>
+</html>
