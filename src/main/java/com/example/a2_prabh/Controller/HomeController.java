@@ -1,6 +1,7 @@
 package com.example.a2_prabh.Controller;
 
 import com.example.a2_prabh.Bean.Book;
+import com.example.a2_prabh.Bean.Cart;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
+    List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
+
 
     @GetMapping("/")
     public String Books(Model model) {
@@ -28,7 +31,6 @@ public class HomeController {
 
     @PostMapping("/addToCart/{id}")
     public String addToCart(@PathVariable int id) {
-        System.out.println("LOL");
 
         Book book = da.getBookByID(id);
 
@@ -36,4 +38,39 @@ public class HomeController {
 
         return "itemadded";
     }
+    @GetMapping("/cart")
+    public String showCart(Model model) {
+
+        List<Cart> cartList = da.getCartList();
+        double totalPrice = calculateTotalPrice(cartList);
+
+        model.addAttribute("cartList", da.getCartList());
+        model.addAttribute("totalPrice", totalPrice);
+
+        return "cart";
+    }
+
+    @GetMapping("/deleteCart/{id}")
+    public String deleteCartByTitle(Model model, @PathVariable int id) {
+        Cart cart = da.getCartByID(id);
+        da.deleteCart(id);
+        List<Cart> cartList = da.getCartList(); // Retrieve updated cart items
+        double totalPrice = calculateTotalPrice(cartList); // Recalculate total price
+
+        model.addAttribute("cartList", cartList);
+        model.addAttribute("totalPrice", totalPrice);
+
+        return "cart";
+    }
+
+
+
+    private double calculateTotalPrice(List<Cart> cartList) {
+        double totalPrice = 0.0;
+        for (Cart cart : cartList) {
+            totalPrice += cart.getPrice();
+        }
+        return totalPrice;
+    }
+
 }

@@ -2,9 +2,131 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        .cart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-header {
+            background-color: #4285f4;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .cart-total {
+            text-align: right;
+            padding: 10px;
+            background-color: #4285f4;
+            color: #fff;
+        }
+
+        .book-item {
+            margin: 10px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative; /* Add positioning for the delete button */
+        }
+
+        .book-item:hover {
+            transform: scale(1.05);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+        }
+        a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4285f4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4285f4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #1c4de9;
+        }
+        .book {
+            text-align: right;
+            padding: 10px;
+            background-color: #4285f4;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
+
+<header class="cart-header">
+    <h1>Shopping Cart</h1>
+
+    <div class="book">
+        <a href="/">View Book</a>
+    </div>
+</header>
+
+<section class="cart-container">
+    <div class="cart">
+        <div id="cartList">
+            <!-- Inside the th:each loop for iterating over books in the cart -->
+            <div th:each="cart : ${cartList}">
+                <div class="book-item">
+                    <form th:action="@{/deleteBook}" method="post">
+                        <!-- Add a null check before accessing the book.id property -->
+                        <input type="hidden" name="bookId" th:value="${book != null ? book.id : ''}" />
+                        <button type="submit" class="delete-btn">×</button>
+                    </form>
+                    <h3 th:text="${cart.title}"></h3>
+                    <p th:text="${cart.author}"></p>
+                    <p th:text="${'ISBN: ' + cart.ISBN}"></p>
+                    <p th:text="${'Price: $' + cart.price}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total amount -->
+        <div class="cart-total" id="cartTotal">
+            <p th:each="total : ${totalPrice}" class="total-amount" th:text="${totalPrice}"></p>
+            <a href="#" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

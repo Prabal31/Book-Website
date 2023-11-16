@@ -1,6 +1,7 @@
 package com.example.a2_prabh.DataBase;
 
 import com.example.a2_prabh.Bean.Book;
+import com.example.a2_prabh.Bean.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -44,5 +45,29 @@ public class DataBaseAccess {
         if (rowsAffected > 0) {
             System.out.println("book inserted into database cart");
         }
+    }
+
+    public List<Cart> getCartList() {
+        System.out.println("LOL");
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM cart";
+        System.out.println("Executing query: " + query);
+
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Cart>(Cart.class));
+    }
+    public Cart getCartByID(int id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM cart WHERE id = :id";
+        namedParameters.addValue("id", id);
+        List<Cart> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Cart.class));
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    public void deleteCart(int id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "DELETE FROM cart where id = :id";
+        namedParameters.addValue("id", id);
+        jdbc.update(query, namedParameters);
     }
 }
