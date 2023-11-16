@@ -17,3 +17,12 @@ CREATE TABLE users (
                        password VARCHAR(255) NOT NULL,
                        email VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE cart (
+                      id INT AUTO_INCREMENT PRIMARY KEY,
+                      title VARCHAR(255),
+                      author VARCHAR(255),
+                      ISBN VARCHAR(20),
+                      price DECIMAL(10, 2),
+                      description TEXT
+);
