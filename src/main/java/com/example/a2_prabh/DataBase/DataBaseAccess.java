@@ -48,7 +48,6 @@ public class DataBaseAccess {
     }
 
     public List<Cart> getCartList() {
-        System.out.println("LOL");
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM cart";
@@ -56,18 +55,14 @@ public class DataBaseAccess {
 
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Cart>(Cart.class));
     }
-    public Cart getCartByID(int id) {
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        String query = "SELECT * FROM cart WHERE id = :id";
-        namedParameters.addValue("id", id);
-        List<Cart> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Cart.class));
-        return result.isEmpty() ? null : result.get(0);
-    }
 
-    public void deleteCart(int id) {
+
+    public void deleteCart(String title) {
+        System.out.println("LOL");
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        String query = "DELETE FROM cart where id = :id";
-        namedParameters.addValue("id", id);
+
+        String query = "DELETE FROM cart where title = :title";
+        namedParameters.addValue("title", title);
         jdbc.update(query, namedParameters);
     }
 }

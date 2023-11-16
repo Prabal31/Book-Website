@@ -107,6 +107,7 @@
         <p th:text="${book.author}"></p>
         <p th:text="${'ISBN: ' + book.ISBN}"></p>
         <p th:text="${'Price: $' + book.price}"></p>
+        <p th:text="${book.description}"></p>
         <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
           <button type="submit" class="add-to-cart-btn">Add to Cart</button>
         </form>

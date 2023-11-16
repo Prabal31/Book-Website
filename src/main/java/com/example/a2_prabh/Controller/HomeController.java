@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -50,10 +51,10 @@ public class HomeController {
         return "cart";
     }
 
-    @GetMapping("/deleteCart/{id}")
-    public String deleteCartByTitle(Model model, @PathVariable int id) {
-        Cart cart = da.getCartByID(id);
-        da.deleteCart(id);
+    @PostMapping("/deleteCart/{title}")
+    public String deleteCartByTitle(Model model, @PathVariable String title) {
+
+        da.deleteCart(title);
         List<Cart> cartList = da.getCartList(); // Retrieve updated cart items
         double totalPrice = calculateTotalPrice(cartList); // Recalculate total price
 
@@ -61,6 +62,12 @@ public class HomeController {
         model.addAttribute("totalPrice", totalPrice);
 
         return "cart";
+    }
+
+    @GetMapping("/Checkout")
+    public String showCheckoutPage() {
+        // Logic to prepare data if needed
+        return "Checkout"; // Assuming "checkout" is the name of your Thymeleaf template
     }
 
 

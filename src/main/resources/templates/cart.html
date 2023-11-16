@@ -107,15 +107,16 @@
             <!-- Inside the th:each loop for iterating over books in the cart -->
             <div th:each="cart : ${cartList}">
                 <div class="book-item">
-                    <form th:action="@{/deleteBook}" method="post">
+                    <form th:action="@{/deleteCart/{title}(title=${cart.title})}" method="post">
                         <!-- Add a null check before accessing the book.id property -->
-                        <input type="hidden" name="bookId" th:value="${book != null ? book.id : ''}" />
                         <button type="submit" class="delete-btn">×</button>
                     </form>
                     <h3 th:text="${cart.title}"></h3>
                     <p th:text="${cart.author}"></p>
                     <p th:text="${'ISBN: ' + cart.ISBN}"></p>
                     <p th:text="${'Price: $' + cart.price}"></p>
+                    <p th:text="${cart.description}"></p>
+
                 </div>
             </div>
         </div>
@@ -123,7 +124,7 @@
         <!-- Total amount -->
         <div class="cart-total" id="cartTotal">
             <p th:each="total : ${totalPrice}" class="total-amount" th:text="${totalPrice}"></p>
-            <a href="#" class="checkout-btn">Proceed to Checkout</a>
+            <a href='/Checkout' class="checkout-btn">Proceed to Checkout</a>
         </div>
     </div>
 </section>
