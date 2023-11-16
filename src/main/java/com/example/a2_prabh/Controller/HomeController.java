@@ -34,6 +34,6 @@ public class HomeController {
 
         da.insertBookInCart(book);
 
-        return "index";
+        return "itemadded";
     }
 }
