@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Book List</title>
+
   <style>
+    /* Advanced CSS styles go here */
     body, h1, h2, p, a {
       margin: 0;
       padding: 0;
@@ -24,88 +27,93 @@
     }
 
     section {
-      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
       padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-    }
-
-    form {
-      max-width: 400px; /* Adjusted width */
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       background-color: #fff;
-      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    label {
-      margin-bottom: 5px;
-      text-align: left;
-      width: 100%;
-    }
-
-    input {
-      margin-bottom: 10px;
-      padding: 8px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    button {
+    .cart {
+      text-align: right;
+      padding: 10px;
       background-color: #4285f4;
       color: #fff;
-      border: none;
-      padding: 8px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background-color 0.3s;
     }
 
-    button:hover {
-      background-color: #1c4de9;
+    .book-list {
+      /* Removed display: flex; and justify-content: center; */
+    }
+
+    .book-item {
+      width: 100%; /* Each book item takes the full width */
+      margin-bottom: 20px; /* Added margin for better separation */
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .book-item:hover {
+      transform: scale(1.05);
+    }
+
+    h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
     }
 
     p {
-      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
-    a {
-      color: #4285f4;
-      text-decoration: none;
+    form {
+      display: flex;
+      justify-content: flex-end; /* Align the button to the right within the form */
     }
 
-    a:hover {
-      text-decoration: underline;
+    .add-to-cart-btn {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #1c4de9;
     }
   </style>
+
 </head>
 <body>
 
 <header>
   <h1>Bookstore</h1>
+  <div class="cart">
+    <a href="/cart">View Cart</a>
+  </div>
 </header>
 
 <section>
-  <h2>Login</h2>
-  <form>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">Login</button>
-  </form>
-
-  <p>Don't have an account? <a href="/signup">Register Here</a>.</p>
+  <h2>Book List</h2>
+  <div class="book-list">
+    <!-- Thymeleaf iteration for displaying books -->
+    <div th:each="book : ${bookList}">
+      <div class="book-item">
+        <h3 th:text="${book.id}"></h3>
+        <h3 th:text="${book.title}"></h3>
+        <p th:text="${book.author}"></p>
+        <p th:text="${'ISBN: ' + book.ISBN}"></p>
+        <p th:text="${'Price: $' + book.price}"></p>
+        <p th:text="${book.description}"></p>
+        <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
+          <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
 
 </body>
