@@ -13,12 +13,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .cart-header {
-            background-color: #4285f4;
-            color: #fff;
-            text-align: center;
-            padding: 1em 0;
-        }
 
         .cart-total {
             text-align: right;
@@ -60,6 +54,7 @@
             border: none;
             border-radius: 3px;
         }
+
         a {
             display: inline-block;
             padding: 5px 10px;
@@ -83,22 +78,74 @@
         .checkout-btn:hover {
             background-color: #1c4de9;
         }
+
+
+        form.header-button {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+        }
+
+        form.header-button input,
+        .cart a {
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        form.header-button input:hover,
+        .cart a:hover {
+            background-color: #1c4de9;
+        }
+
+        /* Logout button specific styles */
+        form.logout-form {
+            left: 10px;
+        }
+
+        /* View Cart button specific styles */
         .book {
-            text-align: right;
-            padding: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Adjust the right position as needed */
+        }
+
+        /* Adjusting existing styles for better alignment */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 1em 0;
             background-color: #4285f4;
             color: #fff;
         }
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+
     </style>
 </head>
 <body>
+<header>
+    <!-- Logout form added to the header -->
+    <form method="post" th:action="@{/logout}" class="header-button logout-form">
+        <input type="submit" value="Logout" />
+    </form>
 
-<header class="cart-header">
+    <!-- View Cart link added to the header -->
+    <div class="book header-button">
+        <a href="/">View Books</a>
+    </div>
     <h1>Shopping Cart</h1>
 
-    <div class="book">
-        <a href="/">View Book</a>
-    </div>
 </header>
 
 <section class="cart-container">
@@ -116,7 +163,6 @@
                     <p th:text="${'ISBN: ' + cart.ISBN}"></p>
                     <p th:text="${'Price: $' + cart.price}"></p>
                     <p th:text="${cart.description}"></p>
-
                 </div>
             </div>
         </div>

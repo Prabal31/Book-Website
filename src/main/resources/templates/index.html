@@ -8,10 +8,6 @@
 
   <style>
     /* Advanced CSS styles go here */
-    body, h1, h2, p, a {
-      margin: 0;
-      padding: 0;
-    }
 
     body {
       font-family: 'Arial', sans-serif;
@@ -84,16 +80,71 @@
     .add-to-cart-btn:hover {
       background-color: #1c4de9;
     }
+    form.header-button {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 10px;
+    }
+
+    form.header-button input,
+    .cart a {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    form.header-button input:hover,
+    .cart a:hover {
+      background-color: #1c4de9;
+    }
+
+    /* Logout button specific styles */
+    form.logout-form {
+      left: 10px;
+    }
+
+    /* View Cart button specific styles */
+    .cart {
+      right: 10px;
+    }
+
+    /* Adjusting existing styles for better alignment */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 1em 0;
+      background-color: #4285f4;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
   </style>
 
 </head>
 <body>
 
 <header>
-  <h1>Bookstore</h1>
-  <div class="cart">
+  <!-- Logout form added to the header -->
+  <form method="post" th:action="@{/logout}" class="header-button logout-form">
+    <input type="submit" value="Logout" />
+  </form>
+
+  <!-- View Cart link added to the header -->
+  <div class="cart header-button">
     <a href="/cart">View Cart</a>
   </div>
+
+  <!-- Your existing header content -->
+  <h1>Bookstore</h1>
 </header>
 
 <section>
