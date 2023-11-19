@@ -2,8 +2,11 @@ package com.example.a2_prabh.Controller;
 
 import com.example.a2_prabh.Bean.Book;
 import com.example.a2_prabh.Bean.Cart;
+import com.example.a2_prabh.Bean.User;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +32,13 @@ public class HomeController {
     }
     @GetMapping("/")
     public String index(Model model) {
-
-        return "login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_USER"))) {
+            return "redirect:/books";
+        } else if(authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
+            return "redirect:/secure/books";
+        }
+        return "index";
     }
 
     @GetMapping("/register")
@@ -40,9 +48,10 @@ public class HomeController {
     }
 
 
-    @GetMapping("/secure")
+    @GetMapping("/secure/books")
     public String secureIndex(Model model) {
-        return "secure/index";
+        model.addAttribute("bookList", da.getbook());
+        return "secure/books";
     }
 
     @GetMapping("/books")
@@ -53,13 +62,27 @@ public class HomeController {
 
     @PostMapping("/addToCart/{id}")
     public String addToCart(@PathVariable int id) {
+        System.out.println("Adding book to cart. Book ID: " + id);
 
         Book book = da.getBookByID(id);
+        System.out.println("Retrieved book: " + book);
 
         da.insertBookInCart(book);
 
+        System.out.println("Book added to cart.");
         return "itemadded";
     }
+
+    @GetMapping("/secure/deleteBookById/{id}")
+    public String deleteStudentById(Model model, @PathVariable Long id) {
+        Book book = da.getbook(id).get(0);
+        da.deleteBookById(id);
+        model.addAttribute("bookList", da.getbook());
+        model.addAttribute("Book", book);
+        return "secure/books";
+    }
+
+
     @GetMapping("/cart")
     public String showCart(Model model) {
 

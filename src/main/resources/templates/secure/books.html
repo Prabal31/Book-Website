@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Your existing head content here -->
+
+  <style>
+
+    .edit-btn,
+    .delete-btn {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin-right: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .edit-btn:hover,
+    .delete-btn:hover {
+      background-color: #1c4de9;
+    }
+
+    /* Add new book button style */
+    .add-new-book-btn {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .add-new-book-btn:hover {
+      background-color: #1c4de9;
+    }
+
+    /* Your existing styles here */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #4285f4;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    section {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart {
+      text-align: right;
+      padding: 10px;
+      background-color: #4285f4;
+      color: #fff;
+    }
+
+    .book-list {
+      /* Removed display: flex; and justify-content: center; */
+    }
+
+    .book-item {
+      width: 100%; /* Each book item takes the full width */
+      margin-bottom: 20px; /* Added margin for better separation */
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .book-item:hover {
+      transform: scale(1.05);
+    }
+
+    h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      justify-content: flex-end; /* Align the button to the right within the form */
+    }
+
+    .add-to-cart-btn,
+    .edit-btn,
+    .delete-btn,
+    .add-new-book-btn {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .add-to-cart-btn:hover,
+    .edit-btn:hover,
+    .delete-btn:hover,
+    .add-new-book-btn:hover {
+      background-color: #1c4de9;
+    }
+
+    /* Logout button specific styles */
+    form.logout-form {
+      left: 10px;
+    }
+
+    /* View Cart button specific styles */
+    .cart {
+      right: 10px;
+    }
+
+    /* Adjusting existing styles for better alignment */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 1em 0;
+      background-color: #4285f4;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+  </style>
+
+  </style>
+
+</head>
+<body>
+
+<header>
+  <form method="post" th:action="@{/logout}" class="header-button logout-form">
+    <input type="submit" value="Logout" />
+  </form>
+  <a href="/addBook" class="add-new-book-btn">Add New Book</a>
+</header>
+
+<section>
+  <h2>Book List</h2>
+  <div class="book-list">
+    <!-- Thymeleaf iteration for displaying books -->
+    <div th:each="book : ${bookList}">
+      <div class="book-item">
+        <h3 th:text="${book.id}"></h3>
+        <h3 th:text="${book.title}"></h3>
+        <p th:text="${book.author}"></p>
+        <p th:text="${'ISBN: ' + book.ISBN}"></p>
+        <p th:text="${'Price: $' + book.price}"></p>
+        <p th:text="${book.description}"></p>
+
+        <!-- Form for edit button -->
+        <form th:action="@{/editBook/{id}(id=${book.id})}" method="get" style="display: inline-block;">
+          <button type="submit" class="edit-btn">Edit</button>
+        </form>
+
+        <!-- Form for delete button -->
+        <form th:action="@{/deleteBook/{id}(id=${book.id})}" method="post" style="display: inline-block;">
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

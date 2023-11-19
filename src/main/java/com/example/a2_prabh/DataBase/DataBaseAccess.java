@@ -31,6 +31,13 @@ public class DataBaseAccess {
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
 
+    public List<Book> getbook(long id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM books where id=:id";
+        System.out.println("Executing query: " + query);
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+    }
+
     public Book getBookByID(int id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM books WHERE id = :id";
@@ -90,6 +97,16 @@ public class DataBaseAccess {
                     BeanPropertyRowMapper<>(User.class));
         } catch (EmptyResultDataAccessException erdae) {
             return null;
+        }
+    }
+
+
+    public void deleteBookById(Long id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "DELETE FROM books WHERE id = :id";
+        namedParameters.addValue("id", id);
+        if (jdbc.update(query, namedParameters) > 0) {
+            System.out.println("Deleted book " + id + " from the database.");
         }
     }
 
