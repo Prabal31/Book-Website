@@ -73,13 +73,24 @@ public class HomeController {
         return "itemadded";
     }
 
-    @GetMapping("/secure/deleteBookById/{id}")
+    @PostMapping("/secure/deleteBookById/{id}")
     public String deleteStudentById(Model model, @PathVariable Long id) {
         Book book = da.getbook(id).get(0);
         da.deleteBookById(id);
+        System.out.println("DOne");
         model.addAttribute("bookList", da.getbook());
-        model.addAttribute("Book", book);
-        return "secure/books";
+        return "secure/bookdeleted";
+    }
+
+    @GetMapping("/secure/editStudentById/{id}")
+    public String editStudentById(Model model, @PathVariable Long id) {
+        // Retrieve the student by ID
+        Book book = da.getbook(id).get(0);
+        da.deleteBookById(id);
+        model.addAttribute("bookList", da.getStudentList());
+        // Add the student to the model
+        model.addAttribute("book", book);
+        return "secure/index";
     }
 
 

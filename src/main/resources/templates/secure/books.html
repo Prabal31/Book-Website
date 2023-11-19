@@ -149,7 +149,6 @@
     }
   </style>
 
-  </style>
 
 </head>
 <body>
@@ -175,12 +174,12 @@
         <p th:text="${book.description}"></p>
 
         <!-- Form for edit button -->
-        <form th:action="@{/editBook/{id}(id=${book.id})}" method="get" style="display: inline-block;">
+        <form th:action="@{/editBook/{id}(id=${book.id})}" style="display: inline-block;">
           <button type="submit" class="edit-btn">Edit</button>
         </form>
 
         <!-- Form for delete button -->
-        <form th:action="@{/deleteBook/{id}(id=${book.id})}" method="post" style="display: inline-block;">
+        <form th:action="@{/secure/deleteBookById/{id}(id=${book.id})}" method="post" style="display: inline-block;">
           <button type="submit" class="delete-btn">Delete</button>
         </form>
 

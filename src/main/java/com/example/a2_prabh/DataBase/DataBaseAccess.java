@@ -33,10 +33,12 @@ public class DataBaseAccess {
 
     public List<Book> getbook(long id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);  // Add this line to supply the 'id' parameter
         String query = "SELECT * FROM books where id=:id";
         System.out.println("Executing query: " + query);
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
+
 
     public Book getBookByID(int id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -104,6 +106,7 @@ public class DataBaseAccess {
     public void deleteBookById(Long id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "DELETE FROM books WHERE id = :id";
+        System.out.println("Executing query: " + query);
         namedParameters.addValue("id", id);
         if (jdbc.update(query, namedParameters) > 0) {
             System.out.println("Deleted book " + id + " from the database.");

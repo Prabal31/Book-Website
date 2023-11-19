@@ -35,13 +35,14 @@ public class SecurityConfig {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
         return http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/secure/**")).hasRole("ADMIN")
-                        .requestMatchers(mvc.pattern("/")).permitAll()
+                        .requestMatchers(mvc.pattern("/**")).permitAll()
                         .requestMatchers(mvc.pattern("/books")).permitAll()
                         .requestMatchers(mvc.pattern("/cart")).permitAll()
                         .requestMatchers(mvc.pattern("/Checkout")).permitAll()
                         .requestMatchers(mvc.pattern("/itemadded")).permitAll()
                         .requestMatchers(mvc.pattern("/addToCart/**")).permitAll()
                         .requestMatchers(mvc.pattern("/deleteCart/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/secure/deleteBookById/**")).permitAll()
                         .requestMatchers(mvc.pattern("/js/**")).permitAll()
                         .requestMatchers(mvc.pattern("/css/**")).permitAll()
                         .requestMatchers(mvc.pattern("/images/**")).permitAll()
