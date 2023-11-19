@@ -21,11 +21,22 @@ public class HomeController {
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
-
     @GetMapping("/")
+    public String login(Model model) {
+
+        return "login";
+    }
+
+
+    @GetMapping("/secure")
+    public String secureIndex(Model model) {
+        return "secure/index";
+    }
+
+    @GetMapping("/books")
     public String Books(Model model) {
         model.addAttribute("bookList", da.getbook());
-        return "book";
+        return "books";
     }
 
     @PostMapping("/addToCart/{id}")
