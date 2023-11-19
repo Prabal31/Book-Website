@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -21,10 +22,21 @@ public class HomeController {
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login(Model model) {
 
         return "login";
+    }
+    @GetMapping("/")
+    public String index(Model model) {
+
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+
+        return "register";
     }
 
 
@@ -87,6 +99,14 @@ public class HomeController {
             totalPrice += cart.getPrice();
         }
         return totalPrice;
+    }
+
+    @PostMapping("/register")
+    public String postRegister(@RequestParam String username, @RequestParam String password) {
+        da.addUser(username, password);
+        Long userId = da.findUserAccount(username).getUserId();
+        da.addRole(userId, Long.valueOf(1));
+        return "login";
     }
 
 }
