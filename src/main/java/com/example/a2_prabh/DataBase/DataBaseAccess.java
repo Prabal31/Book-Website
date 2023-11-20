@@ -100,7 +100,7 @@ public class DataBaseAccess {
         namedParameters.addValue("isbn", book.getISBN());
         namedParameters.addValue("price", book.getPrice());
         namedParameters.addValue("description", book.getDescription());
-        String query = "INSERT INTO books(title,author,ISBN,price,description) VALUES (:title,:author,:isbn,:price,:description)";
+        String query = "INSERT INTO books(title,author,ISBN,price,description) VALUES (:title,:author,COALESCE(:isbn, 'N/A'),:price,:description)";
 
         int rowsAffected = jdbc.update(query, namedParameters);
         if (rowsAffected > 0) {
