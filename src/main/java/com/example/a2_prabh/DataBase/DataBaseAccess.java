@@ -94,13 +94,13 @@ public class DataBaseAccess {
 
     public void insertBook(Book book) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        String query = "INSERT INTO books(title,author,isbn,price,description) VALUES (:title,:author,:isbn,:price,:description)";
 
         namedParameters.addValue("title", book.getTitle());
         namedParameters.addValue("author", book.getAuthor());
         namedParameters.addValue("isbn", book.getISBN());
         namedParameters.addValue("price", book.getPrice());
         namedParameters.addValue("description", book.getDescription());
+        String query = "INSERT INTO books(title,author,ISBN,price,description) VALUES (:title,:author,:isbn,:price,:description)";
 
         int rowsAffected = jdbc.update(query, namedParameters);
         if (rowsAffected > 0) {

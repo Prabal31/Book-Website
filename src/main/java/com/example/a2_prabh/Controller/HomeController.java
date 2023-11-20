@@ -43,14 +43,18 @@ public class HomeController {
 
         return "/secure/addbook";
     }
+
     @GetMapping("/register")
     public String register(Model model) {
 
         return "register";
     }
 
-    @PostMapping("/secure/addBook")
+
+    @PostMapping("/secure/addbook")
     public String addBook(Model model, @ModelAttribute Book book) {
+        System.out.println("done");
+
         bookList.add(book);
         model.addAttribute("book", new Book());
         model.addAttribute("bookList", bookList);
@@ -163,7 +167,7 @@ public class HomeController {
         da.addUser(username, password);
         Long userId = da.findUserAccount(username).getUserId();
         da.addRole(userId, Long.valueOf(1));
-        return "login";
+        return "useradded";
     }
 
 }

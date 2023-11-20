@@ -121,7 +121,7 @@
 <section>
     <div class="book-list">
         <!-- Form for adding a new book -->
-        <form th:action="@{secure/addBook}" method="post">
+        <form th:action="@{/secure/addbook}" method="post" th:object="${book}">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
 
@@ -135,9 +135,9 @@
             <input type="text" id="price" name="price" required>
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
+            <textarea id="description" name="description" required ></textarea>
 
-            <button type="submit" class="add-to-cart-btn" >Add Book</button>
+            <button type="submit" class="add-to-cart-btn" href="/secure/bookadded">Add Book</button>
         </form>
     </div>
 </section>

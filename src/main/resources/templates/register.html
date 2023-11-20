@@ -103,11 +103,11 @@
 
 <section>
   <h2>Register</h2>
-  <form method="post" th:action="@{/register}">
+  <form method="post" th:action="@{/register}" th:object="${user}" onsubmit="return verify()">
 
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <label for="username">Email:</label>
+    <input type="username" id="username" name="username" required>
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
@@ -115,7 +115,7 @@
     <label for="confirmpassword">Confirm password:</label>
     <input type="assword" id="confirmpassword" name="confirmpassword" required>
 
-    <button type="submit">Register</button>
+    <button type="submit" href="/useradded">Register</button>
   </form>
   <div th:if="${param.success}">
 
