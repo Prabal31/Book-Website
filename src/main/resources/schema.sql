@@ -5,7 +5,7 @@ CREATE TABLE books (
                        id INT AUTO_INCREMENT PRIMARY KEY,
                        title VARCHAR(255) NOT NULL,
                        author VARCHAR(255) NOT NULL,
-                       ISBN VARCHAR(20) NOT NULL,
+                       ISBN VARCHAR(200) NOT NULL,
                        price DOUBLE NOT NULL,
                        description TEXT
 );
@@ -15,7 +15,7 @@ CREATE TABLE cart (
                       id INT AUTO_INCREMENT PRIMARY KEY,
                       title VARCHAR(255),
                       author VARCHAR(255),
-                      ISBN VARCHAR(20),
+                      ISBN VARCHAR(200),
                       price DECIMAL(10, 2),
                       description TEXT
 );

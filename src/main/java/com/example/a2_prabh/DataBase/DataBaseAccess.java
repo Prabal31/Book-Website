@@ -64,6 +64,50 @@ public class DataBaseAccess {
         }
     }
 
+    public Book getBookByTitle(String title) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM books WHERE title = :title";
+        namedParameters.addValue("title", title);
+        List<Book> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    public void updateBookByTitle(String title, Book books) {
+        System.out.println("DOne");
+
+        String query = "UPDATE books SET title = :title, author = :author, " +
+                "isbn = :isbn, price = :price, description = :description " +
+                "WHERE title = :title";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("title", books.getTitle());
+        parameters.addValue("author", books.getAuthor());
+        parameters.addValue("isbn", books.getISBN());
+        parameters.addValue("price", books.getPrice());
+        parameters.addValue("description", books.getDescription());
+
+        int rowsAffected = jdbc.update(query, parameters);
+        if (rowsAffected > 0) {
+            System.out.println("book inserted into database cart");
+        }
+    }
+
+    public void insertBook(Book book) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "INSERT INTO books(title,author,isbn,price,description) VALUES (:title,:author,:isbn,:price,:description)";
+
+        namedParameters.addValue("title", book.getTitle());
+        namedParameters.addValue("author", book.getAuthor());
+        namedParameters.addValue("isbn", book.getISBN());
+        namedParameters.addValue("price", book.getPrice());
+        namedParameters.addValue("description", book.getDescription());
+
+        int rowsAffected = jdbc.update(query, namedParameters);
+        if (rowsAffected > 0) {
+            System.out.println("book inserted into database");
+        }
+    }
+
     public List<Cart> getCartList() {
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();

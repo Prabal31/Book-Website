@@ -64,6 +64,16 @@
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+    form.logout-form {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    /* View Cart button specific styles */
+    .cart {
+      right: 10px;
+    }
 
     .cart {
       text-align: right;
@@ -157,7 +167,7 @@
   <form method="post" th:action="@{/logout}" class="header-button logout-form">
     <input type="submit" value="Logout" />
   </form>
-  <a href="/addBook" class="add-new-book-btn">Add New Book</a>
+  <a href="/secure/addbook" class="add-new-book-btn">Add New Book</a>
 </header>
 
 <section>
@@ -174,7 +184,7 @@
         <p th:text="${book.description}"></p>
 
         <!-- Form for edit button -->
-        <form th:action="@{/editBook/{id}(id=${book.id})}" style="display: inline-block;">
+        <form th:action="@{/secure/editBook/{id}(id=${book.id})}" method="post" style="display: inline-block;">
           <button type="submit" class="edit-btn">Edit</button>
         </form>
 

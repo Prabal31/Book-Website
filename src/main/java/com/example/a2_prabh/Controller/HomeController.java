@@ -9,10 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -41,10 +38,27 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/secure/addbook")
+    public String addBook() {
+
+        return "/secure/addbook";
+    }
     @GetMapping("/register")
     public String register(Model model) {
 
         return "register";
+    }
+
+    @PostMapping("/secure/addBook")
+    public String addBook(Model model, @ModelAttribute Book book) {
+        bookList.add(book);
+        model.addAttribute("book", new Book());
+        model.addAttribute("bookList", bookList);
+
+        da.insertBook(book);
+        model.addAttribute("bookList", da.getbook());
+
+        return "/secure/bookadded";
     }
 
 
@@ -82,15 +96,24 @@ public class HomeController {
         return "secure/bookdeleted";
     }
 
-    @GetMapping("/secure/editStudentById/{id}")
-    public String editStudentById(Model model, @PathVariable Long id) {
-        // Retrieve the student by ID
+    @PostMapping("/secure/editBook/{id}")
+    public String showEditForm(@PathVariable long id, Model model) {
         Book book = da.getbook(id).get(0);
-        da.deleteBookById(id);
-        model.addAttribute("bookList", da.getStudentList());
-        // Add the student to the model
         model.addAttribute("book", book);
-        return "secure/index";
+        return "secure/editBook";
+    }
+    @PostMapping("/secure/edit/{title}")
+    public String editBook(Model model, @PathVariable String title, @ModelAttribute Book updatedBook) {
+        System.out.println("DOne");
+
+        da.updateBookByTitle(title, updatedBook);
+
+        Book book = da.getBookByTitle(title);
+
+        model.addAttribute("bookList", da.getbook());
+        model.addAttribute("book", book);
+
+        return "secure/books"; // Redirect to the book list page after editing
     }
 
 
