@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Store Home</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f8f8f8;
     }
+
     header {
       background-color: #333;
       color: #fff;
       padding: 10px;
       text-align: center;
     }
+
     main {
       padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
     }
+
     .login-signup {
       position: fixed;
       top: 20px;
@@ -26,15 +33,75 @@
       display: flex;
       align-items: center;
     }
+
     .login-signup a {
       text-decoration: none;
       margin-left: 10px;
       color: cornflowerblue;
+    }
 
+    section {
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
 
+    .book-list {
+      gap: 20px;
+    }
+
+    .book-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #fff;
+      margin-bottom: 20px; /* Add margin to separate books vertically */
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .book-item:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .book-image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .book-details {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: cornflowerblue;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-top-left-radius: 8px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .book-item:hover .book-details {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 600px) {
+      .login-signup {
+        position: static;
+        text-align: center;
+        margin-top: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
 <header>
   <h1>Welcome to Our Book Store</h1>
@@ -48,24 +115,24 @@
   <h2>Book List</h2>
   <div class="book-list">
     <!-- Thymeleaf iteration for displaying books -->
-    <div th:each="book : ${bookList}">
-      <div class="book-item">
-        <h3 th:text="${book.id}"></h3>
-        <h3 th:text="${book.title}"></h3>
-        <p th:text="${book.author}"></p>
-        <p th:text="${'ISBN: ' + book.ISBN}"></p>
-        <p th:text="${'Price: $' + book.price}"></p>
-        <p th:text="${book.description}"></p>
-        <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
-          <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-        </form>
-      </div>
+    <div th:each="book : ${bookList}" class="book-item">
+      <h3 th:text="${book.id}"></h3>
+      <h3 th:text="${book.title}"></h3>
+      <p th:text="${book.author}"></p>
+      <p th:text="${'ISBN: ' + book.ISBN}"></p>
+      <p th:text="${'Price: $' + book.price}"></p>
+      <p th:text="${book.description}"></p>
+      <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
+        <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+      </form>
+      <button class="book-details" th:href="details">Details</button>
     </div>
   </div>
 </section>
 <div class="login-signup">
   <a href="#" th:href="@{/login}">Login</a>
-  <a href="#" th:href="@{/signup}">Sign Up</a>
+  <a href="#" th:href="@{/register}">Sign Up</a>
 </div>
 </body>
+
 </html>

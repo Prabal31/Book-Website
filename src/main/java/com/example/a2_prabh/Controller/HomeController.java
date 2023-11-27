@@ -2,7 +2,6 @@ package com.example.a2_prabh.Controller;
 
 import com.example.a2_prabh.Bean.Book;
 import com.example.a2_prabh.Bean.Cart;
-import com.example.a2_prabh.Bean.User;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,8 +26,14 @@ public class HomeController {
 
         return "login";
     }
+    @GetMapping("/details")
+    public String details(Model model) {
+
+        return "details";
+    }
     @GetMapping("/")
     public String index(Model model) {
+        model.addAttribute("bookList", da.getbook());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_USER"))) {
             return "redirect:/books";
