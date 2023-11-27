@@ -1,28 +1,71 @@
 -- data.sql
 
--- Insert sample books
-INSERT INTO books (title, author, ISBN, price, description)
-VALUES
-    ('The Great Gatsby', 'F. Scott Fitzgerald', '978-0-7432-7356-5', 10.99, 'Classic American novel.'),
-    ('To Kill a Mockingbird', 'Harper Lee', '978-0-06-112008-4', 12.99, 'Pulitzer Prize-winning novel.'),
-    ('1984', 'George Orwell', '978-0-452-28423-4', 8.99, 'Dystopian fiction.'),
-    ('The Catcher in the Rye', 'J.D. Salinger', '978-0-316-76948-0', 11.99, 'Coming-of-age novel.'),
-    ('Pride and Prejudice', 'Jane Austen', '978-0-19-953556-9', 9.99, 'Classic romantic novel.'),
-    ('The Hobbit', 'J.R.R. Tolkien', '978-0-261-10236-0', 15.99, 'Fantasy novel.'),
-    ('Harry Potter and the Sorcerer s Stone', 'J.K. Rowling', '978-0-590-35340-3', 14.99, 'Fantasy novel.'),
-    ('The Lord of the Rings', 'J.R.R. Tolkien', '978-0-395-08254-2', 18.99, 'Epic fantasy trilogy.'),
-    ('To the Lighthouse', 'Virginia Woolf', '978-0-15-690739-2', 13.99, 'Modernist novel.'),
-    ('Brave New World', 'Aldous Huxley', '978-0-06-085052-4', 10.99, 'Dystopian fiction.'),
-    ('One Hundred Years of Solitude', 'Gabriel Garcia Marquez', '978-0-06-112008-4', 12.99, 'Magical realism.'),
-    ('The Odyssey', 'Homer', '978-0-14-026886-7', 11.99, 'Epic poem.'),
-    ('Frankenstein', 'Mary Shelley', '978-0-14-143947-1', 9.99, 'Gothic novel.'),
-    ('The Road', 'Cormac McCarthy', '978-0-307-26560-9', 14.99, 'Post-apocalyptic fiction.'),
-    ('The Picture of Dorian Gray', 'Oscar Wilde', '978-0-14-143957-0', 10.99, 'Philosophical novel.'),
-    ('The Grapes of Wrath', 'John Steinbeck', '978-0-14-303943-3', 12.99, 'Great Depression novel.'),
-    ('The Alchemist', 'Paulo Coelho', '978-0-06-112241-5', 11.99, 'Philosophical novel.'),
-    ('Moby-Dick', 'Herman Melville', '978-0-06-287022-2', 13.99, 'Adventure novel.'),
-    ('The Shining', 'Stephen King', '978-0-385-12167-5', 15.99, 'Horror novel.'),
-    ('The Scarlet Letter', 'Nathaniel Hawthorne', '978-0-553-21269-7', 9.99, 'Historical novel.');
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Attack on Titan', 'Hajime Isayama', '978-1-4278-1923-1', 29.99,
+     'In a world where humanity resides within enormous walled cities to protect themselves from Titans, gigantic humanoid creatures, the story follows Eren Yeager and his friends who join the military to fight the Titans after their hometown is invaded and Erens mother is eaten.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+  ('Death Note', 'Tsugumi Ohba', '978-4-08-873621-5', 24.99,
+   'Light Yagami discovers a mysterious notebook called the Death Note, which grants him the power to kill anyone whose name he writes in it. As he takes justice into his own hands, a cat-and-mouse game with a genius detective named L unfolds.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+  ('One Piece', 'Eiichiro Oda', '978-4-08-873621-5', 34.99,
+   'Monkey D. Luffy sets out on a grand adventure to become the Pirate King and find the legendary One Piece treasure. Along the way, he forms a diverse crew, faces powerful foes, and explores the vast and mysterious world of the Grand Line.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+  ('Naruto', 'Masashi Kishimoto', '978-1-4215-0639-6', 27.99,
+   'Naruto Uzumaki, a young ninja with dreams of becoming the strongest ninja and leader of his village, navigates the challenges of the ninja world, faces powerful adversaries, and seeks acknowledgment from his peers.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+  ('Fullmetal Alchemist', 'Hiromu Arakawa', '978-1-59816-816-0', 22.99,
+   'Two brothers, Edward and Alphonse Elric, use alchemy in their quest to find the Philosophers Stone to restore their bodies after a failed alchemical experiment. The journey reveals dark secrets and a plot that could shake the entire nation.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('My Hero Academia', 'Kohei Horikoshi', '978-1-4215-9078-9', 31.99,
+     'Set in a world where individuals possess superpowers known as "Quirks," My Hero Academia follows Izuku Midoriya, a Quirkless boy, as he enrolls in U.A. High School to become a hero and protect the world from villains.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Demon Slayer', 'Koyoharu Gotouge', '978-4-08-881375-6', 26.99,
+     'In a world where demons terrorize humanity, Tanjiro Kamado becomes a demon slayer after his family is slaughtered by demons. Alongside his friends, he seeks revenge and a cure for his demon-turned sister, Nezuko.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('One Punch Man', 'ONE', '978-4-08-870210-4', 19.99,
+     'Saitama, a hero who can defeat any opponent with a single punch, seeks meaning and excitement in his hero career. Despite his overwhelming strength, he struggles with boredom and the lack of challenging foes.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Dragon Ball Z', 'Akira Toriyama', '978-1-56931-930-7', 32.99,
+     'Follow the adventures of Goku and his friends as they protect Earth from powerful foes and search for the Dragon Balls, magical orbs that grant wishes. The series explores themes of friendship, perseverance, and the pursuit of strength.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Tokyo Ghoul', 'Sui Ishida', '978-1-4215-9941-9', 28.99,
+     'Ken Kaneki, after a chance encounter with a ghoul, becomes part ghoul himself and navigates the complex world of ghouls and humans. The story delves into themes of identity, morality, and the blurred line between good and evil.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Hunter x Hunter', 'Yoshihiro Togashi', '978-1-4215-7933-4', 30.99,
+     'Gon Freecss embarks on a journey to become a Hunter and find his missing father. Along the way, he encounters powerful foes, forms lasting friendships, and uncovers the mysteries of the Hunter Association.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Sword Art Online', 'Reki Kawahara', '978-0-316-34914-2', 23.99,
+     'Players get trapped in a virtual reality MMORPG, and protagonist Kirito must navigate the game to survive. The series explores themes of virtual reality, relationships, and the consequences of living in a digital world.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('My Neighbor Totoro', 'Hayao Miyazaki', '978-1-59019-693-2', 19.99,
+     'Two sisters, Satsuke and Mei, encounter friendly forest spirits in rural Japan while their mother is recovering in a nearby hospital. My Neighbor Totoro is a heartwarming tale that captures the magic of childhood and the wonders of nature.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Steins;Gate', 'Chiyomaru Shikura', '978-4-04-101834-9', 25.99,
+     'A group of friends discovers a way to send messages to the past, leading to unintended consequences and a struggle against a secretive organization. Steins;Gate combines science fiction, time travel, and intricate character relationships.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Cowboy Bebop', 'Shinichirō Watanabe', '978-1-897376-58-1', 29.99,
+     'Bounty hunters Spike Spiegel and Jet Black travel through space in the spaceship Bebop, pursuing dangerous criminals. Cowboy Bebop is known for its stylish animation, jazz-influenced soundtrack, and exploration of existential themes.');
+
+INSERT INTO books (title, author, ISBN, price, description) VALUES
+    ('Neon Genesis Evangelion', 'Hideaki Anno', '978-1-892022-23-5', 26.99,
+     'In a post-apocalyptic world, teenagers pilot giant mechs known as Evangelions to protect Earth from mysterious beings called Angels. Neon Genesis Evangelion is renowned for its psychological depth, symbolism, and deconstruction of the mecha genre.');
+
+
+
 
 INSERT INTO sec_user (email, encryptedPassword, enabled)
 VALUES ('frank@sge.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);

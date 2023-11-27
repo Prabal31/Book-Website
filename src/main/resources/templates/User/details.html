@@ -17,26 +17,12 @@
       margin: 0;
     }
 
-    header {
-      background-color: #4285f4;
-      color: #fff;
-      text-align: center;
-      padding: 1em 0;
-    }
-
     section {
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .cart {
-      text-align: right;
-      padding: 10px;
-      background-color: #4285f4;
-      color: #fff;
     }
 
     .book-list {
@@ -61,10 +47,6 @@
       margin-bottom: 5px;
     }
 
-    p {
-      margin-bottom: 10px;
-    }
-
     form {
       display: flex;
       justify-content: flex-end; /* Align the button to the right within the form */
@@ -82,49 +64,8 @@
     .add-to-cart-btn:hover {
       background-color: #1c4de9;
     }
-    form.header-button {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 10px;
-    }
-
-    form.header-button input,
-    .cart a {
-      background-color: #4285f4;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    form.header-button input:hover,
-    .cart a:hover {
-      background-color: #1c4de9;
-    }
-
-    /* Logout button specific styles */
-    form.logout-form {
-      left: 10px;
-    }
-
-    /* View Cart button specific styles */
-    .cart {
-      right: 10px;
-    }
 
     /* Adjusting existing styles for better alignment */
-    header {
-      position: relative;
-      text-align: center;
-      padding: 1em 0;
-      background-color: #4285f4;
-      color: #fff;
-    }
     .book-details {
       position: absolute;
       TOP: 0;
@@ -139,50 +80,21 @@
       transition: opacity 0.3s ease;
       text-decoration: none;
     }
-    a{
-      color: white;
-      background-color:#4285f4;
-    }
-
-    h1 {
-      margin-bottom: 0;
-    }
   </style>
 
 </head>
 
 <body>
 
-<header>
-  <!-- Logout form added to the header -->
-  <form method="post" th:action="@{/logout}" class="header-button logout-form">
-    <input type="submit" value="Logout" />
-  </form>
-
-  <!-- View Cart link added to the header -->
-  <div class="cart header-button">
-    <a href="/User/cart">View Cart</a>
-  </div>
-
-  <!-- Your existing header content -->
-  <h1>Bookstore</h1>
-</header>
-
 <section>
   <h2>Book List</h2>
   <div class="book-list">
     <!-- Thymeleaf iteration for displaying books -->
     <div th:each="book : ${bookList}" class="book-item">
-      <h3 th:text="${book.id}"></h3>
-      <h3 th:text="${book.title}"></h3>
-      <p th:text="${book.author}"></p>
-      <p th:text="${'ISBN: ' + book.ISBN}"></p>
-      <p th:text="${'Price: $' + book.price}"></p>
-      <form th:action="@{/User/addToCart/{id}(id=${book.id})}" method="post">
+      <h3 th:text="${book.description}"></h3>
+      <form th:action="@{User/addToCart/{id}(id=${book.id})}" method="post">
         <button type="submit" class="add-to-cart-btn">Add to Cart</button>
       </form>
-      <button class="book-details" href="User/details">Details</button>
-
     </div>
   </div>
 </section>

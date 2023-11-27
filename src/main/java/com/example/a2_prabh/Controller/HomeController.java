@@ -31,12 +31,18 @@ public class HomeController {
 
         return "details";
     }
+    @GetMapping("User/details")
+        public String Userdetails(Model model) {
+        model.addAttribute("bookList", da.getbook());
+
+        return "User/details";
+    }
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("bookList", da.getbook());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_USER"))) {
-            return "redirect:/books";
+            return "redirect:User/books";
         } else if(authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/secure/books";
         }
@@ -77,13 +83,13 @@ public class HomeController {
         return "secure/books";
     }
 
-    @GetMapping("/books")
+    @GetMapping("User/books")
     public String Books(Model model) {
         model.addAttribute("bookList", da.getbook());
-        return "books";
+        return "User/books";
     }
 
-    @PostMapping("/addToCart/{id}")
+    @PostMapping("User/addToCart/{id}")
     public String addToCart(@PathVariable int id) {
         System.out.println("Adding book to cart. Book ID: " + id);
 
@@ -93,7 +99,7 @@ public class HomeController {
         da.insertBookInCart(book);
 
         System.out.println("Book added to cart.");
-        return "itemadded";
+        return "User/itemadded";
     }
 
     @PostMapping("/secure/deleteBookById/{id}")
@@ -126,7 +132,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/cart")
+    @GetMapping("User/cart")
     public String showCart(Model model) {
 
         List<Cart> cartList = da.getCartList();
@@ -135,10 +141,10 @@ public class HomeController {
         model.addAttribute("cartList", da.getCartList());
         model.addAttribute("totalPrice", totalPrice);
 
-        return "cart";
+        return "User/cart";
     }
 
-    @PostMapping("/deleteCart/{title}")
+    @PostMapping("User/deleteCart/{title}")
     public String deleteCartByTitle(Model model, @PathVariable String title) {
 
         da.deleteCart(title);
@@ -148,13 +154,13 @@ public class HomeController {
         model.addAttribute("cartList", cartList);
         model.addAttribute("totalPrice", totalPrice);
 
-        return "cart";
+        return "User/cart";
     }
 
-    @GetMapping("/Checkout")
+    @GetMapping("User/Checkout")
     public String showCheckoutPage() {
         da.deleteCart();
-        return "Checkout";
+        return "User/Checkout";
     }
 
 
