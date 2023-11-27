@@ -3,14 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unsecured Page</title>
+  <title>Book Store Home</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+    }
+    .login-signup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .login-signup a {
+      text-decoration: none;
+      margin-left: 10px;
+      color: cornflowerblue;
+
+
+    }
+  </style>
 </head>
 <body>
-<h1>Welcome to Spring Security</h1>
-<h2>This is an unsecured page and anyone can access it</h2><br>
-<h2>
-  you can access the secured page after authenticating yourself properly
-</h2>
-<h3>Authenticate <a href="#" th:href="@{/login}">here</a></h3>
+<header>
+  <h1>Welcome to Our Book Store</h1>
+</header>
+<main>
+  <h2>Discover a World of Books</h2>
+  <p>Explore our vast collection of books covering various genres.</p>
+  <p>Find your next favorite read with us!</p>
+</main>
+<section>
+  <h2>Book List</h2>
+  <div class="book-list">
+    <!-- Thymeleaf iteration for displaying books -->
+    <div th:each="book : ${bookList}">
+      <div class="book-item">
+        <h3 th:text="${book.id}"></h3>
+        <h3 th:text="${book.title}"></h3>
+        <p th:text="${book.author}"></p>
+        <p th:text="${'ISBN: ' + book.ISBN}"></p>
+        <p th:text="${'Price: $' + book.price}"></p>
+        <p th:text="${book.description}"></p>
+        <form th:action="@{/addToCart/{id}(id=${book.id})}" method="post">
+          <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="login-signup">
+  <a href="#" th:href="@{/login}">Login</a>
+  <a href="#" th:href="@{/signup}">Sign Up</a>
+</div>
 </body>
 </html>
