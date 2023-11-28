@@ -1,13 +1,13 @@
-package com.example.a2_prabh;
+package com.example.BookStore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class A2PrabhApplication {
+public class BookStore {
 
     public static void main(String[] args) {
-        SpringApplication.run(A2PrabhApplication.class, args);
+        SpringApplication.run(BookStore.class, args);
     }
 
 }
