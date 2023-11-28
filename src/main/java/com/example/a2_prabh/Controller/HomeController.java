@@ -31,6 +31,7 @@ public class HomeController {
 
         return "details";
     }
+
     @GetMapping("User/details")
         public String Userdetails(Model model) {
         model.addAttribute("bookList", da.getbook());
@@ -174,8 +175,8 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String postRegister(@RequestParam String username, @RequestParam String password) {
-        da.addUser(username, password);
+    public String postRegister(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String username, @RequestParam String password) {
+        da.addUser(first_name, last_name, username, password);
         Long userId = da.findUserAccount(username).getUserId();
         da.addRole(userId, Long.valueOf(1));
         return "useradded";

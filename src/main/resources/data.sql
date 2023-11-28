@@ -67,11 +67,11 @@ INSERT INTO books (title, author, ISBN, price, description) VALUES
 
 
 
-INSERT INTO sec_user (email, encryptedPassword, enabled)
-VALUES ('frank@sge.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
+INSERT INTO sec_user (first_name,last_name,email, encryptedPassword, enabled)
+VALUES ('Frank','Kol', 'frank@sge.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
 
-INSERT INTO sec_user (email, encryptedPassword, enabled)
-VALUES ('manchapr@sheridancollege.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
+INSERT INTO sec_user (first_name,last_name,email, encryptedPassword, enabled)
+VALUES ('Prabh','Manchanda', 'manchapr@sheridancollege.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
 
 
 INSERT INTO sec_role (roleName)

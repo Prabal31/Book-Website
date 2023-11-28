@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(mvc.pattern("User/Checkout")).permitAll()
                         .requestMatchers(mvc.pattern("User/itemadded")).permitAll()
                         .requestMatchers(mvc.pattern("/details")).permitAll()
+                        .requestMatchers(mvc.pattern("User/details")).permitAll()
                         .requestMatchers(mvc.pattern("User/addToCart/**")).permitAll()
                         .requestMatchers(mvc.pattern("User/deleteCart/**")).permitAll()
                         .requestMatchers(mvc.pattern("/secure/bookdeleted")).permitAll()

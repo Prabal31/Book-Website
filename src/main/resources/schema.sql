@@ -23,6 +23,8 @@ CREATE TABLE cart (
 
 CREATE TABLE sec_user (
                           userId            BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                          first_name        VARCHAR(275),
+                          last_name        VARCHAR(275),
                           email             VARCHAR(75) NOT NULL UNIQUE,
                           encryptedPassword VARCHAR(128) NOT NULL,
                           enabled           BIT NOT NULL

@@ -169,11 +169,13 @@ public class DataBaseAccess {
         return jdbc.queryForList(query, namedParameters,
                 String.class);
     }
-    public void addUser(String email, String password) {
+    public void addUser(String first_name, String last_name, String email, String password) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "INSERT INTO sec_user "
-                + "(email, encryptedPassword, enabled) "
-                + "VALUES (:email, :encryptedPassword, 1)";
+                + "(first_name, last_name, email, encryptedPassword, enabled) "
+                + "VALUES (:first_name, :last_name,:email, :encryptedPassword, 1)";
+        namedParameters.addValue("first_name", first_name);
+        namedParameters.addValue("last_name", last_name);
         namedParameters.addValue("email", email);
         namedParameters.addValue("encryptedPassword", passwordEncoder.encode(password));
         jdbc.update(query, namedParameters);
