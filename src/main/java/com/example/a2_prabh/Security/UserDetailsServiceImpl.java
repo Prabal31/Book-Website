@@ -1,10 +1,10 @@
-package com.example.BookStore.Security;
+package com.example.a2_prabh.Security;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.BookStore.Bean.User;
-import com.example.BookStore.DataBase.DataBaseAccess;
+import com.example.a2_prabh.Bean.User;
+import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

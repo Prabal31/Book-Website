@@ -1,8 +1,8 @@
-package com.example.BookStore.Controller;
+package com.example.a2_prabh.Controller;
 
-import com.example.BookStore.Bean.Book;
-import com.example.BookStore.Bean.Cart;
-import com.example.BookStore.DataBase.DataBaseAccess;
+import com.example.a2_prabh.Bean.Book;
+import com.example.a2_prabh.Bean.Cart;
+import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

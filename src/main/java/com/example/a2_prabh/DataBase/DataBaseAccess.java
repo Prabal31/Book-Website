@@ -1,8 +1,8 @@
-package com.example.BookStore.DataBase;
+package com.example.a2_prabh.DataBase;
 
-import com.example.BookStore.Bean.Book;
-import com.example.BookStore.Bean.Cart;
-import com.example.BookStore.Bean.User;
+import com.example.a2_prabh.Bean.Book;
+import com.example.a2_prabh.Bean.Cart;
+import com.example.a2_prabh.Bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
