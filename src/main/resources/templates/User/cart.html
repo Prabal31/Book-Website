@@ -142,7 +142,7 @@
 
     <!-- View Cart link added to the header -->
     <div class="book header-button">
-        <a href="/static">View Books</a>
+        <a href="/User/books">View Books</a>
     </div>
     <h1>Shopping Cart</h1>
 
@@ -154,7 +154,7 @@
             <!-- Inside the th:each loop for iterating over books in the cart -->
             <div th:each="cart : ${cartList}">
                 <div class="book-item">
-                    <form th:action="@{/deleteCart/{title}(title=${cart.title})}" method="post">
+                    <form th:action="@{/User/deleteCart/{title}(title=${cart.title})}" method="post">
                         <!-- Add a null check before accessing the book.id property -->
                         <button type="submit" class="delete-btn">×</button>
                     </form>
@@ -170,7 +170,7 @@
         <!-- Total amount -->
         <div class="cart-total" id="cartTotal">
             <p th:each="total : ${totalPrice}" class="total-amount" th:text="${totalPrice}"></p>
-            <a href='/Checkout' class="checkout-btn">Proceed to Checkout</a>
+            <a href='/User/payment' class="checkout-btn">Proceed to Checkout</a>
         </div>
     </div>
 </section>

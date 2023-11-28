@@ -2,7 +2,7 @@
 
 -- Table for books
 CREATE TABLE books (
-                       bookId INT AUTO_INCREMENT PRIMARY KEY,
+                       id INT AUTO_INCREMENT PRIMARY KEY,
                        title VARCHAR(255) NOT NULL,
                        author VARCHAR(255) NOT NULL,
                        ISBN VARCHAR(200) NOT NULL,
@@ -38,7 +38,8 @@ CREATE TABLE sec_role(
 CREATE TABLE user_book (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
                            userId BIGINT NOT NULL,
-                           bookId BIGINT NOT NULL
+                           bookId BIGINT NOT NULL,
+                           enabled           BIT NOT NULL
 );
 
 

@@ -32,11 +32,18 @@ public class HomeController {
         return "details";
     }
 
-    @GetMapping("User/details")
-        public String Userdetails(Model model) {
-        model.addAttribute("bookList", da.getbook());
+    @GetMapping("/User/payment")
+    public String payments(Model model) {
 
-        return "User/details";
+        return "/User/payment";
+    }
+
+    @PostMapping("/User/details/{id}")
+        public String Userdetails(Model model, @PathVariable int id) {
+
+        model.addAttribute("bookList", da.getBookByID(id));
+
+        return "/User/details";
     }
     @GetMapping("/")
     public String index(Model model) {
