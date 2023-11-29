@@ -11,6 +11,10 @@ import lombok.NonNull;
 public class User {
     private Long userId;
     @NonNull
+    private String first_name;
+    @NonNull
+    private String last_name;
+    @NonNull
     private String email;
     @NonNull
     private String encryptedPassword;

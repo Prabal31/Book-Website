@@ -1,6 +1,7 @@
 package com.example.a2_prabh.Controller;
 
 import com.example.a2_prabh.Bean.Book;
+import com.example.a2_prabh.Bean.User;
 import com.example.a2_prabh.Bean.Cart;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
+
+    int bookid=0;
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
     @GetMapping("/login")
@@ -94,6 +97,12 @@ public class HomeController {
     @GetMapping("User/books")
     public String Books(Model model) {
         model.addAttribute("bookList", da.getbook());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = (User) authentication.getPrincipal();
+        model.addAttribute("loggedInUser", loggedInUser);
+
+
         return "User/books";
     }
 
@@ -102,9 +111,21 @@ public class HomeController {
         System.out.println("Adding book to cart. Book ID: " + id);
 
         Book book = da.getBookByID(id);
+
         System.out.println("Retrieved book: " + book);
 
         da.insertBookInCart(book);
+        bookid=id;
+
+        System.out.println("Book added to cart.");
+        return "User/itemadded";
+    }
+
+    @PostMapping("User/yourprofile/{id}")
+    public String yourprofile(@PathVariable int id, int bookid) {
+
+
+        da.insertBookforUser(id, bookid);
 
         System.out.println("Book added to cart.");
         return "User/itemadded";

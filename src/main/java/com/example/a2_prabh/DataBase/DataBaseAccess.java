@@ -22,6 +22,8 @@ public class DataBaseAccess {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private User user;
+
     public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public List<Book> getbook() {
@@ -31,6 +33,13 @@ public class DataBaseAccess {
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
 
+    public List<User> getuser() {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM sec_user";
+        System.out.println("Executing query: " + query);
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<User>(User.class));
+    }
+
     public List<Book> getbook(long id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("id", id);  // Add this line to supply the 'id' parameter
@@ -38,6 +47,8 @@ public class DataBaseAccess {
         System.out.println("Executing query: " + query);
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
+
+
 
 
     public Book getBookByID(int id) {
@@ -71,6 +82,8 @@ public class DataBaseAccess {
         List<Book> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
         return result.isEmpty() ? null : result.get(0);
     }
+
+
 
     public void updateBookByTitle(String title, Book books) {
         System.out.println("DOne");
@@ -143,6 +156,19 @@ public class DataBaseAccess {
                     BeanPropertyRowMapper<>(User.class));
         } catch (EmptyResultDataAccessException erdae) {
             return null;
+        }
+    }
+    public void insertBookforUser(int userid, int bookid) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+
+        String query = "INSERT INTO user_book(userId, bookId, enabled) VALUES (:userId,:bookid,1)";
+        namedParameters.addValue("userId", userid);
+        namedParameters.addValue("bookId", bookid);
+
+
+        int rowsAffected = jdbc.update(query, namedParameters);
+        if (rowsAffected > 0) {
+            System.out.println("book inserted into database cart");
         }
     }
 
