@@ -33,11 +33,13 @@ public class DataBaseAccess {
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
 
-    public List<User> getuser(String username) {
+    public User getuser(String email) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        String query = "SELECT * FROM sec_user";
+        String query = "SELECT * FROM sec_user where email=:email";
         System.out.println("Executing query: " + query);
-        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<User>(User.class));
+        namedParameters.addValue("email", email);
+        List<User> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(User.class));
+        return result.isEmpty() ? null : result.get(0);
     }
 
     public List<Book> getbook(long id) {

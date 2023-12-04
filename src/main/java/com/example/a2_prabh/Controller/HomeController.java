@@ -20,6 +20,8 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
+
+    List<User> userList = new CopyOnWriteArrayList<User>();
     int bookid=0;
     String username;
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
@@ -47,7 +49,10 @@ public class HomeController {
 
     @GetMapping("/User/yourprofile")
     public String yourprofile(Model model) {
-   da.getuser(getCurrentUsername());
+        String username=getCurrentUsername();
+        System.out.println(username);
+        model.addAttribute("userList", da.getuser(username));
+
         return "/User/yourprofile";
     }
     @PostMapping("/User/details/{id}")
