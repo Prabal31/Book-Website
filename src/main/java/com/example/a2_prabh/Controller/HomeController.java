@@ -21,6 +21,11 @@ public class HomeController {
 
     @Autowired
     DataBaseAccess da;
+
+    double totalPrice=0.0;
+    double newtotal=0.0;
+
+    int count=0;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
     List<Integer> userbookList = new CopyOnWriteArrayList<>();
 
@@ -102,6 +107,15 @@ public class HomeController {
 
         return "/secure/addbook";
     }
+    @GetMapping("/secure/report")
+    public String report(Model model) {
+        newtotal= newtotal+totalPrice;
+        model.addAttribute("totalPrice", newtotal);
+        model.addAttribute("totalcount", count);
+
+        return "/secure/report";
+    }
+
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -164,6 +178,7 @@ public class HomeController {
         System.out.println("Retrieved book: " + book);
         userbookList.add(id);
         da.insertBookInCart(book);
+        count++;
         bookid = id;
 
         System.out.println("Book added to cart.");
@@ -225,6 +240,7 @@ public class HomeController {
     public String deleteCartByTitle(Model model, @PathVariable String title) {
 
         da.deleteCart(title);
+        count--;
         List<Cart> cartList = da.getCartList(); // Retrieve updated cart items
         double totalPrice = calculateTotalPrice(cartList); // Recalculate total price
 
@@ -243,7 +259,7 @@ public class HomeController {
 
 
     private double calculateTotalPrice(List<Cart> cartList) {
-        double totalPrice = 0.0;
+        totalPrice = 0.0;
         for (Cart cart : cartList) {
             totalPrice += cart.getPrice();
         }

@@ -1,203 +1,237 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <!-- Your existing head content here -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store Home</title>
   <style>
-
-    .edit-btn,
-    .delete-btn {
-      background-color: #4285f4;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      margin-right: 5px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .edit-btn:hover,
-    .delete-btn:hover {
-      background-color: #1c4de9;
-    }
-
-    /* Add new book button style */
-    .add-new-book-btn {
-      background-color: #4285f4;
-      color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
-      display: block;
-    }
-
-    .add-new-book-btn:hover {
-      background-color: #1c4de9;
-    }
-
-    /* Your existing styles here */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
     }
 
     header {
-      background-color: #4285f4;
+      background-color: cornflowerblue;
       color: #fff;
+      padding: 10px;
       text-align: center;
-      padding: 1em 0;
+      position: relative;
+    }
+
+    .header-button {
+      position: absolute;
+      top: 10px;
+    }
+
+    .logout-form {
+      left: 10px;
+    }
+
+    .cart {
+      right: 10px;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .login-signup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .login-signup a {
+      text-decoration: none;
+      margin-left: 10px;
+      color: black;
+      font-weight: bold;
     }
 
     section {
-      max-width: 800px;
-      margin: 20px auto;
       padding: 20px;
+      margin: 20px auto;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    form.logout-form {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-    }
-
-    /* View Cart button specific styles */
-    .cart {
-      right: 10px;
-    }
-
-    .cart {
-      text-align: right;
-      padding: 10px;
-      background-color: #4285f4;
-      color: #fff;
+      border-radius: 8px;
     }
 
     .book-list {
-      /* Removed display: flex; and justify-content: center; */
+      gap: 20px;
     }
 
     .book-item {
-      width: 100%; /* Each book item takes the full width */
-      margin-bottom: 20px; /* Added margin for better separation */
+      border: 1px solid #ddd;
       padding: 15px;
+      border-radius: 8px;
       background-color: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
     }
 
     .book-item:hover {
-      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
-    h3 {
-      font-size: 1.2em;
-      margin-bottom: 5px;
-    }
-
-    p {
+    .book-image {
+      max-width: 100%;
+      height: auto;
       margin-bottom: 10px;
     }
 
-    form {
-      display: flex;
-      justify-content: flex-end; /* Align the button to the right within the form */
+    .book-details {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: cornflowerblue;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-top-left-radius: 8px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
     }
 
-    .add-to-cart-btn,
-    .edit-btn,
-    .delete-btn,
-    .add-new-book-btn {
-      background-color: #4285f4;
+    .book-item:hover .book-details {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 600px) {
+      .login-signup {
+        position: static;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      a {
+        color: white;
+        background-color: #4285f4;
+      }
+
+      header {
+        position: relative;
+        text-align: center;
+        padding: 1em 0;
+        background-color: #4285f4;
+        color: #fff;
+      }
+
+      form.header-button input:hover,
+      .cart a:hover {
+        background-color: #1c4de9;
+      }
+
+      form.header-button input,
+      .cart a {
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .add-to-cart-btn:hover {
+        background-color: #1c4de9;
+      }
+
+      form.header-button {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 10px;
+      }
+
+      .your-book {
+        align-items: center;
+      }
+
+      .notification {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+    }
+    .report-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #ff4444; /* Red color, you can change it */
       color: #fff;
       border: none;
-      padding: 5px 10px;
+      padding: 10px;
       border-radius: 3px;
       cursor: pointer;
       transition: background-color 0.3s;
       text-decoration: none;
-      display: inline-block;
     }
 
-    .add-to-cart-btn:hover,
-    .edit-btn:hover,
-    .delete-btn:hover,
-    .add-new-book-btn:hover {
-      background-color: #1c4de9;
-    }
-
-    /* Logout button specific styles */
-    form.logout-form {
-      left: 10px;
-    }
-
-    /* View Cart button specific styles */
-    .cart {
-      right: 10px;
-    }
-
-    /* Adjusting existing styles for better alignment */
-    header {
-      position: relative;
-      text-align: center;
-      padding: 1em 0;
-      background-color: #4285f4;
-      color: #fff;
-    }
-
-    h1 {
-      margin-bottom: 0;
+    .report-button:hover {
+      background-color: #cc0000; /* Darker red on hover, you can change it */
     }
   </style>
-
-
 </head>
-<body>
 
+<body>
 <header>
+  <!-- Logout form -->
   <form method="post" th:action="@{/logout}" class="header-button logout-form">
     <input type="submit" value="Logout" />
   </form>
   <a href="/secure/addbook" class="add-new-book-btn">Add New Book</a>
+
+  <a class="report-button" href="/secure/report">Report</a>
+  <h1>Bookstore</h1>
 </header>
 
+<main>
+  <h2>Discover a World of Anime</h2>
+  <p>Explore our vast collection of Manga covering various genres.</p>
+  <p>Find your next favorite read with us!</p>
+</main>
+
 <section>
-  <h2>Book List</h2>
-  <div class="book-list">
-    <!-- Thymeleaf iteration for displaying books -->
-    <div th:each="book : ${bookList}">
-      <div class="book-item">
-        <h3 th:text="${book.id}"></h3>
-        <h3 th:text="${book.title}"></h3>
-        <p th:text="${book.author}"></p>
-        <p th:text="${'ISBN: ' + book.ISBN}"></p>
-        <p th:text="${'Price: $' + book.price}"></p>
-        <p th:text="${book.description}"></p>
+    <h2>Book List</h2>
+    <div class="book-list">
+      <!-- Thymeleaf iteration for displaying books -->
+      <div th:each="book : ${bookList}">
+        <div class="book-item">
+          <h3 th:text="${book.id}"></h3>
+          <h3 th:text="${book.title}"></h3>
+          <p th:text="${book.author}"></p>
+          <p th:text="${'ISBN: ' + book.ISBN}"></p>
+          <p th:text="${'Price: $' + book.price}"></p>
+          <p th:text="${book.description}"></p>
 
-        <!-- Form for edit button -->
-        <form th:action="@{/secure/editBook/{id}(id=${book.id})}" method="post" style="display: inline-block;">
-          <button type="submit" class="edit-btn">Edit</button>
-        </form>
+          <!-- Form for edit button -->
+          <form th:action="@{/secure/editBook/{id}(id=${book.id})}" method="post" style="display: inline-block;">
+            <button type="submit" class="edit-btn">Edit</button>
+          </form>
 
-        <!-- Form for delete button -->
-        <form th:action="@{/secure/deleteBookById/{id}(id=${book.id})}" method="post" style="display: inline-block;">
-          <button type="submit" class="delete-btn">Delete</button>
-        </form>
-
-        </form>
+          <!-- Form for delete button -->
+          <form th:action="@{/secure/deleteBookById/{id}(id=${book.id})}" method="post" style="display: inline-block;">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</section>
-
+</section>>
 </body>
 </html>
