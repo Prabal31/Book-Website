@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,9 +22,12 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
+    List<Integer> userbookList = new CopyOnWriteArrayList<>();
 
     List<User> userList = new CopyOnWriteArrayList<User>();
-    int bookid=0;
+    int bookid = 0;
+
+    String UserId;
     String username;
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
@@ -35,6 +40,7 @@ public class HomeController {
     public String login() {
         return "login";
     }
+
     @GetMapping("/details")
     public String details(Model model) {
 
@@ -47,28 +53,45 @@ public class HomeController {
         return "/User/payment";
     }
 
+    @GetMapping("/User/orderplaced")
+    public String orderplaced(Model model) {
+        da.insertBooksForUser(UserId, userbookList);
+        da.deleteCart();
+        return "/User/orderplaced";
+    }
+
     @GetMapping("/User/yourprofile")
     public String yourprofile(Model model) {
-        String username=getCurrentUsername();
+        String username = getCurrentUsername();
         System.out.println(username);
+
         model.addAttribute("userList", da.getuser(username));
+
+        List<Integer> bookIds = da.getUserbookId(username);
+        System.out.println(bookIds);
+        List<Book> userBookList = da.getBooksByIdList(bookIds);
+        System.out.println(userBookList);
+
+        model.addAttribute("userBookList", userBookList);
 
         return "/User/yourprofile";
     }
+
     @PostMapping("/User/details/{id}")
-        public String Userdetails(Model model, @PathVariable int id) {
+    public String Userdetails(Model model, @PathVariable int id) {
 
         model.addAttribute("bookList", da.getBookByID(id));
 
         return "/User/details";
     }
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("bookList", da.getbook());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_USER"))) {
             return "redirect:/User/books";
-        } else if(authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
+        } else if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/secure/books";
         }
         return "index";
@@ -115,17 +138,33 @@ public class HomeController {
 
         return "User/books";
     }
-
     @PostMapping("/User/addToCart/{id}")
-    public String addToCart(@PathVariable int id) {
+    public String addToCart(@PathVariable int id, RedirectAttributes redirectAttributes) {
         System.out.println("Adding book to cart. Book ID: " + id);
+        String username = getCurrentUsername();
+        UserId = da.getUserID(username);
+        List<Integer> bookIds = da.getUserbookId(username);
 
+        if (bookIds.contains(id)) {
+            redirectAttributes.addFlashAttribute("notification", "Book is already Bought.");
+            return "redirect:/User/books";
+        }
+        if (userbookList.contains(id)) {
+            redirectAttributes.addFlashAttribute("notification", "Book is already in the cart.");
+            return "redirect:/User/books";
+        }
+        // Check if the book is already in the user's cart
+        if (da.isBookInUserCart(Integer.parseInt(UserId), id)) {
+            redirectAttributes.addFlashAttribute("notification", "Book is already in the cart.");
+            return "redirect:/User/books";
+        }
+
+        // If not in cart and not bought, proceed to add to the cart
         Book book = da.getBookByID(id);
-
         System.out.println("Retrieved book: " + book);
-
+        userbookList.add(id);
         da.insertBookInCart(book);
-        bookid=id;
+        bookid = id;
 
         System.out.println("Book added to cart.");
         return "/User/itemadded";
@@ -135,8 +174,6 @@ public class HomeController {
     public String yourprofile(@PathVariable int id, int bookid) {
 
 
-        da.insertBookforUser(id, bookid);
-
         System.out.println("Book added to cart.");
         return "/User/itemadded";
     }
@@ -144,6 +181,7 @@ public class HomeController {
     @PostMapping("/secure/deleteBookById/{id}")
     public String deleteStudentById(Model model, @PathVariable Long id) {
         Book book = da.getbook(id).get(0);
+        userbookList.remove(id);
         da.deleteBookById(id);
         System.out.println("DOne");
         model.addAttribute("bookList", da.getbook());

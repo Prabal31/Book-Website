@@ -93,6 +93,24 @@
     a:hover {
       text-decoration: underline;
     }
+
+    #goback {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none; /* Remove default link underline */
+    }
+
+    #goback:hover {
+      background-color: #1c4de9;
+    }
   </style>
 </head>
 <body>
@@ -100,6 +118,8 @@
 <header>
   <h1>Bookstore</h1>
 </header>
+
+<a id="goback"  href="/">Go Back</a>
 
 <section>
   <h2>Register</h2>
@@ -133,6 +153,7 @@
 
   <p>Already have an account? <a href="/login">Login Here</a>.</p>
 </section>
+
 
 </body>
 </html>

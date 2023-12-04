@@ -152,6 +152,15 @@
       .your-book {
         align-items: center;
       }
+      /* Add this to your existing CSS */
+      .notification {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
     }
   </style>
 </head>
@@ -162,6 +171,10 @@
   <form method="post" th:action="@{/logout}" class="header-button logout-form">
     <input type="submit" value="Logout" />
   </form>
+
+  <div th:if="${notification}" class="notification">
+    <p th:text="${notification}"></p>
+  </div>
 
   <!-- View Cart link -->
   <div class="cart header-button">

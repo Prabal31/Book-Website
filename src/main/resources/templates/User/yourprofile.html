@@ -34,8 +34,7 @@
         }
 
         section {
-            max-width: 600px;
-            margin: 50px auto;
+            width: 100%; /* Set the width to 100% */
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -88,7 +87,7 @@
 
     <!-- Go Back link -->
     <div class="header-button go-back-link">
-        <a href="/User/yourprofile">Go Back</a>
+        <a href="/User/books">Go Back</a>
     </div>
 
     <h1>Bookstore</h1>
@@ -98,13 +97,24 @@
     <h2>User Account</h2>
     <div>
         <div th:each="user : ${userList}" class="user-card">
-            <h3 th:text="${user.first_name + ' ' + user.last_name}"></h3>
-            <p th:text="'Email: ' + ${user.email}"></p>
+            <h1 th:text="${user.first_name + ' ' + user.last_name}"></h1>
+            <h3 th:text="'Email: ' + ${user.email}"></h3>
             <!-- Add more user information if available -->
         </div>
 
         <!-- Additional information and link for viewing purchases -->
-        <h3 class="purchase-heading">View Your Purchases</h3>
+        <h1 class="purchase-heading">View Your Purchases</h1>
+
+        <div>
+            <div th:each="book : ${userBookList}" class="book-item">
+                <h3 th:text="${book.title}"></h3>
+                <p th:text="${book.author}"></p>
+                <p th:text="${'ISBN: ' + book.ISBN}"></p>
+                <h2><p th:text="${book.description}"></p></h2>
+                    <!-- Add other book details as needed -->
+                </div>
+            </div>
+        </div>
         <!-- Add the link or details for viewing purchases here -->
     </div>
 </section>

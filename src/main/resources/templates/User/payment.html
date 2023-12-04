@@ -119,11 +119,23 @@
 
 <body>
 <header>
+    <!-- Logout form -->
+    <form method="post" action="/logout" class="header-button logout-form">
+        <input type="submit" value="Logout" />
+    </form>
+
     <!-- Your existing header content -->
     <h1>Bookstore</h1>
 </header>
 
 <main>
+    <!-- Your existing main content -->
+
+    <!-- Go back link -->
+    <div class="header-button" style="position: absolute; top: 10px; right: 10px;">
+        <a href="/User/books">Go Back</a>
+    </div>
+
     <h2>Payment Details</h2>
     <form id="paymentForm" onsubmit="return validateForm()">
         <div class="form-row">
@@ -153,7 +165,6 @@
 
         <label for="billingAddress">Billing Address:</label>
         <input type="text" id="billingAddress" required><br>
-
         <button type="submit">Place Order</button>
     </form>
 </main>
@@ -173,12 +184,8 @@
             return false;
         }
 
-        // You can add more validation logic here
-
-        // Assuming the form is valid, show a pop-up and redirect to another page
         alert('Validating credentials...');
-        // Redirect to another page (you can replace 'anotherpage.html' with your actual page)
-        window.location.href = 'anotherpage.html';
+        window.location.href = "/User/orderplaced";
 
         // Prevent the form from submitting (since we're redirecting manually)
         return false;

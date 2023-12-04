@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -41,6 +42,18 @@ public class DataBaseAccess {
         List<User> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(User.class));
         return result.isEmpty() ? null : result.get(0);
     }
+    public String getUserID(String email) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT userId FROM sec_user WHERE email = :email";
+        System.out.println("Executing query: " + query);
+        namedParameters.addValue("email", email);
+        try {
+            return jdbc.queryForObject(query, namedParameters, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            // Handle the case where no result is found, e.g., return null or throw an exception.
+            return null;
+        }
+    }
 
     public List<Book> getbook(long id) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -60,7 +73,19 @@ public class DataBaseAccess {
         List<Book> result = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
         return result.isEmpty() ? null : result.get(0);
     }
+    public List<Book> getBooksByIdList(List<Integer> bookIds) {
+        if (bookIds.isEmpty()) {
+            return Collections.emptyList();
+        }
 
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("bookIds", bookIds);
+
+        String query = "SELECT * FROM books WHERE id IN (:bookIds)";
+        System.out.println("Executing query: " + query);
+
+        return jdbc.query(query, parameters, new BeanPropertyRowMapper<>(Book.class));
+    }
     public void insertBookInCart(Book book) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "INSERT INTO cart(title,author,isbn,price,description) VALUES (:title,:author,:isbn,:price,:description)";
@@ -131,6 +156,18 @@ public class DataBaseAccess {
 
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Cart>(Cart.class));
     }
+    public boolean isBookInUserCart(int userId, int bookId) {
+        String query = "SELECT COUNT(*) FROM user_book WHERE userId = :userId AND bookId = :bookId";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("userId", userId);
+        parameters.addValue("bookId", bookId);
+
+        int count = jdbc.queryForObject(query, parameters, Integer.class);
+
+        return count > 0;
+    }
+
 
 
     public void deleteCart(String title) {
@@ -160,19 +197,32 @@ public class DataBaseAccess {
             return null;
         }
     }
-    public void insertBookforUser(int userid, int bookid) {
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+    public void insertBooksForUser(String userId, List<Integer> bookIds) {
+        String query = "INSERT INTO user_book(userId, bookId, enabled) VALUES (:userId, :bookId, 1)";
 
-        String query = "INSERT INTO user_book(userId, bookId, enabled) VALUES (:userId,:bookid,1)";
-        namedParameters.addValue("userId", userid);
-        namedParameters.addValue("bookId", bookid);
+        for (Integer bookId : bookIds) {
+            MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+            namedParameters.addValue("userId", userId);
+            namedParameters.addValue("bookId", bookId);
 
+            int rowsAffected = jdbc.update(query, namedParameters);
 
-        int rowsAffected = jdbc.update(query, namedParameters);
-        if (rowsAffected > 0) {
-            System.out.println("book inserted into database cart");
+            if (rowsAffected > 0) {
+                System.out.println("Book with ID " + bookId + " inserted into the user's cart.");
+            } else {
+                System.out.println("Failed to insert book with ID " + bookId + " into the user's cart.");
+            }
         }
     }
+    public List<Integer> getUserbookId(String username) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT bookId FROM user_book WHERE userId = (SELECT userId FROM sec_user WHERE email = :username)";
+
+        namedParameters.addValue("username", username);
+        return jdbc.queryForList(query, namedParameters, Integer.class);
+    }
+
+
 
 
     public void deleteBookById(Long id) {
