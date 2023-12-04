@@ -168,13 +168,10 @@
     <a href="/User/cart">View Cart</a>
   </div>
 
-  <div id="your-book" th:each="user : ${userList}" >
-    <a th:href="@{/User/yourprofile/{id}(id=${loggedInUser.userId})}" th:text="${user.first_name}"></a>
-  </div>
+  <div>
+    <h2><a href="/User/yourprofile">Home</a></h2>
+    </div>
 
-
-
-  <!-- Your existing header content -->
   <h1>Bookstore</h1>
 </header>
 
@@ -189,7 +186,6 @@
   <div class="book-list">
     <!-- Thymeleaf iteration for displaying books -->
     <div th:each="book : ${bookList}" class="book-item">
-      <h3 th:text="${book.id}"></h3>
       <h3 th:text="${book.title}"></h3>
       <p th:text="${book.author}"></p>
       <p th:text="${'ISBN: ' + book.ISBN}"></p>

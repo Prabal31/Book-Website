@@ -6,11 +6,11 @@ import com.example.a2_prabh.Bean.Cart;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,13 +20,17 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
-
     int bookid=0;
+    String username;
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
-    @GetMapping("/login")
-    public String login(Model model) {
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
 
+    @GetMapping("/login")
+    public String login() {
         return "login";
     }
     @GetMapping("/details")
@@ -41,6 +45,11 @@ public class HomeController {
         return "/User/payment";
     }
 
+    @GetMapping("/User/yourprofile")
+    public String yourprofile(Model model) {
+   da.getuser(getCurrentUsername());
+        return "/User/yourprofile";
+    }
     @PostMapping("/User/details/{id}")
         public String Userdetails(Model model, @PathVariable int id) {
 
@@ -53,7 +62,7 @@ public class HomeController {
         model.addAttribute("bookList", da.getbook());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_USER"))) {
-            return "redirect:User/books";
+            return "redirect:/User/books";
         } else if(authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/secure/books";
         }
@@ -94,19 +103,15 @@ public class HomeController {
         return "secure/books";
     }
 
-    @GetMapping("User/books")
+    @GetMapping("/User/books")
     public String Books(Model model) {
+
         model.addAttribute("bookList", da.getbook());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User loggedInUser = (User) authentication.getPrincipal();
-        model.addAttribute("loggedInUser", loggedInUser);
-
 
         return "User/books";
     }
 
-    @PostMapping("User/addToCart/{id}")
+    @PostMapping("/User/addToCart/{id}")
     public String addToCart(@PathVariable int id) {
         System.out.println("Adding book to cart. Book ID: " + id);
 
@@ -118,17 +123,17 @@ public class HomeController {
         bookid=id;
 
         System.out.println("Book added to cart.");
-        return "User/itemadded";
+        return "/User/itemadded";
     }
 
-    @PostMapping("User/yourprofile/{id}")
+    @PostMapping("/User/yourprofile/{id}")
     public String yourprofile(@PathVariable int id, int bookid) {
 
 
         da.insertBookforUser(id, bookid);
 
         System.out.println("Book added to cart.");
-        return "User/itemadded";
+        return "/User/itemadded";
     }
 
     @PostMapping("/secure/deleteBookById/{id}")
@@ -183,7 +188,7 @@ public class HomeController {
         model.addAttribute("cartList", cartList);
         model.addAttribute("totalPrice", totalPrice);
 
-        return "User/cart";
+        return "/User/cart";
     }
 
     @GetMapping("User/Checkout")

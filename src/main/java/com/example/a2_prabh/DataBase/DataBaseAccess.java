@@ -33,7 +33,7 @@ public class DataBaseAccess {
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
     }
 
-    public List<User> getuser() {
+    public List<User> getuser(String username) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM sec_user";
         System.out.println("Executing query: " + query);

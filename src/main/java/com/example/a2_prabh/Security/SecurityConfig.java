@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
@@ -30,27 +31,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector
-            introspector) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
         return http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/secure/**")).hasRole("ADMIN")
                         .requestMatchers(mvc.pattern("/User/**")).hasRole("USER")
                         .requestMatchers(mvc.pattern("/**")).permitAll()
-                        .requestMatchers(mvc.pattern("User/books")).permitAll()
-                        .requestMatchers(mvc.pattern("User/cart")).permitAll()
-                        .requestMatchers(mvc.pattern("User/Checkout")).permitAll()
-                        .requestMatchers(mvc.pattern("User/itemadded")).permitAll()
-                        .requestMatchers(mvc.pattern("/details")).permitAll()
-                        .requestMatchers(mvc.pattern("User/details")).permitAll()
-                        .requestMatchers(mvc.pattern("User/addToCart/**")).permitAll()
-                        .requestMatchers(mvc.pattern("User/deleteCart/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/bookdeleted")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/deleteBookById/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/editbook/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/edit/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/addbook")).permitAll()
-                        .requestMatchers(mvc.pattern("/secure/bookadded")).permitAll()
                         .requestMatchers(mvc.pattern("/js/**")).permitAll()
                         .requestMatchers(mvc.pattern("/css/**")).permitAll()
                         .requestMatchers(mvc.pattern("/images/**")).permitAll()
