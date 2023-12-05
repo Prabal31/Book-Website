@@ -212,7 +212,6 @@
       <!-- Thymeleaf iteration for displaying books -->
       <div th:each="book : ${bookList}">
         <div class="book-item">
-          <h3 th:text="${book.id}"></h3>
           <h3 th:text="${book.title}"></h3>
           <p th:text="${book.author}"></p>
           <p th:text="${'ISBN: ' + book.ISBN}"></p>

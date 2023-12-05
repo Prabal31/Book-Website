@@ -6,7 +6,6 @@ import com.example.a2_prabh.Bean.Cart;
 import com.example.a2_prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
