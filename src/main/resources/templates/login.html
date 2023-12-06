@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-
 <head>
-  <!-- Meta tags for character set and viewport -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Page title -->
   <title>Login Page</title>
-  <!-- Styles for page layout and components -->
   <style>
     body, h1, h2, p, a {
       margin: 0;
@@ -15,14 +11,12 @@
     }
 
     body {
-      /* Body styling */
       font-family: 'Arial', sans-serif;
       background-color: #f5f5f5;
       color: #333;
     }
 
     header {
-      /* Header styling */
       background-color: #4285f4;
       color: #fff;
       text-align: center;
@@ -30,7 +24,6 @@
     }
 
     section {
-      /* Section styling */
       width: 100%;
       padding: 20px;
       box-sizing: border-box;
@@ -42,7 +35,6 @@
     }
 
     form {
-      /* Form styling */
       max-width: 400px;
       width: 100%;
       display: flex;
@@ -55,14 +47,12 @@
     }
 
     label {
-      /* Label styling */
       margin-bottom: 5px;
       text-align: left;
       width: 100%;
     }
 
     input {
-      /* Input styling */
       margin-bottom: 10px;
       padding: 8px;
       width: 100%;
@@ -70,7 +60,6 @@
     }
 
     button {
-      /* Button styling */
       background-color: #4285f4;
       color: #fff;
       border: none;
@@ -81,28 +70,23 @@
     }
 
     button:hover {
-      /* Button hover effect */
       background-color: #1c4de9;
     }
 
     p {
-      /* Paragraph styling */
       margin-top: 10px;
     }
 
     a {
-      /* Link styling */
       color: #4285f4;
       text-decoration: none;
     }
 
     a:hover {
-      /* Link hover effect */
       text-decoration: underline;
     }
 
     #goback {
-      /* Go back button styling */
       position: fixed;
       top: 10px;
       right: 10px;
@@ -117,23 +101,20 @@
     }
 
     #goback:hover {
-      /* Go back button hover effect */
       background-color: #1c4de9;
     }
   </style>
 </head>
-
 <body>
-<!-- Header section -->
+
 <header>
   <h1>Bookstore</h1>
 </header>
-<!-- Go back link -->
+
 <a id="goback" href="/">Go Back</a>
-<!-- Login section -->
+
 <section>
   <h2>Login</h2>
-  <!-- Login form -->
   <form method="post" th:action="@{/login}" >
     <label for="email">username:</label>
     <input type="text" id="email" name="username" required>
@@ -143,13 +124,11 @@
 
     <button type="submit">Login</button>
   </form>
-  <!-- Error message for invalid credentials -->
   <div th:if="${param.error}">
     <div class="error">
       Invalid credentials
     </div>
   </div>
-  <!-- Success message for logout -->
   <div th:if="${param.logout}">
     <div class="success">
       You have been logged out

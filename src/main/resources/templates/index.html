@@ -2,12 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <!-- Meta tags for character set and viewport -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Page title -->
   <title>Book Store Home</title>
-  <!-- Styles for page layout and components -->
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -17,7 +14,6 @@
     }
 
     header {
-      /* Header styling */
       background-color: cornflowerblue; /* Change header background color to blue */
       color: #fff;
       padding: 10px;
@@ -25,14 +21,12 @@
     }
 
     main {
-      /* Main content styling */
       padding: 20px;
       max-width: 800px;
       margin: 0 auto;
     }
 
     .login-signup {
-      /* Login and signup links positioning */
       position: fixed;
       top: 20px;
       right: 20px;
@@ -41,7 +35,6 @@
     }
 
     .login-signup a {
-      /* Login and signup link styling */
       text-decoration: none;
       margin-left: 10px;
       color: black;
@@ -49,7 +42,6 @@
     }
 
     section {
-      /* Book list section styling */
       padding: 20px;
       margin: 20px auto;
       background-color: #fff;
@@ -58,12 +50,10 @@
     }
 
     .book-list {
-      /* Book list container styling */
       gap: 20px;
     }
 
     .book-item {
-      /* Individual book item styling */
       border: 1px solid #ddd;
       padding: 15px;
       border-radius: 8px;
@@ -75,19 +65,16 @@
     }
 
     .book-item:hover {
-      /* Book item hover effect */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .book-image {
-      /* Styling for book images */
       max-width: 100%;
       height: auto;
       margin-bottom: 10px;
     }
 
     .book-details {
-      /* Book details link styling */
       position: absolute;
       bottom: 0;
       right: 0;
@@ -103,12 +90,10 @@
     }
 
     .book-item:hover .book-details {
-      /* Show book details on hover */
       opacity: 1;
     }
 
     @media screen and (max-width: 600px) {
-      /* Responsive design for smaller screens */
       .login-signup {
         position: static;
         text-align: center;
@@ -119,23 +104,19 @@
 </head>
 
 <body>
-<!-- Header section -->
 <header>
   <h1>Welcome to Our Book Store</h1>
 </header>
-<!-- Main content section -->
 <main>
   <h2>Discover a World of Anime</h2>
   <p>Explore our vast collection of Manga covering various genres.</p>
   <p>Find your next favorite read with us!</p>
 </main>
-<!-- Book list section -->
 <section>
   <h2>Book List</h2>
   <div class="book-list">
     <!-- Thymeleaf iteration for displaying books -->
     <div th:each="book : ${bookList}" class="book-item">
-      <!-- Book details -->
       <h3 th:text="${book.title}"></h3>
       <p th:text="${book.author}"></p>
       <p th:text="${'ISBN: ' + book.ISBN}"></p>
@@ -144,7 +125,6 @@
     </div>
   </div>
 </section>
-<!-- Login and signup links -->
 <div class="login-signup">
   <a href="#" th:href="@{/login}">Login</a>
   <a href="#" th:href="@{/register}">Sign Up</a>

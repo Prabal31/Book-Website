@@ -13,13 +13,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @RequestMapping("/api/books")
 public class BookController {
 
-    // A list to hold books (consider using a service or database instead of an in-memory list in production)
     java.util.List<Book> bookList = new CopyOnWriteArrayList<>();
 
     @Autowired
     private DataBaseAccess da;
 
-    // Endpoint to add a book (accessible to ROLE_ADMIN)
     @Secured("ROLE_ADMIN")
     @PostMapping("/add")
     public String addBook(@RequestBody Book book) {
@@ -27,7 +25,6 @@ public class BookController {
         return "Book added successfully";
     }
 
-    // Endpoint to delete a book by ID (accessible to ROLE_ADMIN)
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
@@ -41,7 +38,6 @@ public class BookController {
         return da.getBookByID(id.intValue());
     }
 
-    // Endpoint to get all books
     @GetMapping
     public List<Book> getAllBooks() {
         return da.getbook();

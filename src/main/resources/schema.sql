@@ -1,59 +1,58 @@
--- Creating a table to store information about books
+-- schema.sql
+
+-- Table for books
 CREATE TABLE books (
-                       id INT AUTO_INCREMENT PRIMARY KEY,          -- Unique identifier for each book
-                       title VARCHAR(255) NOT NULL,                -- Title of the book (cannot be null)
-                       author VARCHAR(255) NOT NULL,               -- Author of the book (cannot be null)
-                       ISBN VARCHAR(200) NOT NULL,                 -- International Standard Book Number
-                       price DOUBLE NOT NULL,                      -- Price of the book
-                       description TEXT                            -- Detailed description of the book
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       title VARCHAR(255) NOT NULL,
+                       author VARCHAR(255) NOT NULL,
+                       ISBN VARCHAR(200) NOT NULL,
+                       price DOUBLE NOT NULL,
+                       description TEXT
 );
 
--- Creating a table to represent the user's shopping cart
+
 CREATE TABLE cart (
-                      id INT AUTO_INCREMENT PRIMARY KEY,          -- Unique identifier for each cart item
-                      title VARCHAR(255),                         -- Title of the book in the cart
-                      author VARCHAR(255),                        -- Author of the book in the cart
-                      ISBN VARCHAR(200),                          -- International Standard Book Number in the cart
-                      price DECIMAL(10, 2),                       -- Price of the book in the cart
-                      description TEXT                            -- Detailed description of the book in the cart
+                      id INT AUTO_INCREMENT PRIMARY KEY,
+                      title VARCHAR(255),
+                      author VARCHAR(255),
+                      ISBN VARCHAR(200),
+                      price DECIMAL(10, 2),
+                      description TEXT
 );
 
--- Creating a table to store user information
+
 CREATE TABLE sec_user (
-                          userId BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each user
-                          first_name VARCHAR(275),                             -- First name of the user
-                          last_name VARCHAR(275),                              -- Last name of the user
-                          email VARCHAR(75) NOT NULL UNIQUE,                   -- Email address of the user (unique)
-                          encryptedPassword VARCHAR(128) NOT NULL,            -- Encrypted password of the user
-                          enabled BIT NOT NULL                                -- Indicates if the user is enabled or disabled
+                          userId            BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                          first_name        VARCHAR(275),
+                          last_name        VARCHAR(275),
+                          email             VARCHAR(75) NOT NULL UNIQUE,
+                          encryptedPassword VARCHAR(128) NOT NULL,
+                          enabled           BIT NOT NULL
 );
 
--- Creating a table to store role information
-CREATE TABLE sec_role (
-                          roleId BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each role
-                          roleName VARCHAR(30) NOT NULL UNIQUE                 -- Name of the role (unique)
+CREATE TABLE sec_role(
+                         roleId   BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                         roleName VARCHAR(30) NOT NULL UNIQUE
 );
 
--- Creating a table to establish a many-to-many relationship between users and books
 CREATE TABLE user_book (
-                           id BIGINT AUTO_INCREMENT PRIMARY KEY,       -- Unique identifier for each user-book relationship
-                           userId BIGINT NOT NULL,                     -- Foreign key referencing the user table
-                           bookId BIGINT NOT NULL,                     -- Foreign key referencing the books table
-                           enabled BIT NOT NULL                        -- Indicates if the user-book relationship is enabled or disabled
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           userId BIGINT NOT NULL,
+                           bookId BIGINT NOT NULL,
+                           enabled           BIT NOT NULL
 );
 
--- Creating a table to store user-role relationships
-CREATE TABLE user_role (
-                           id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each user-role relationship
-                           userId BIGINT NOT NULL,                         -- Foreign key referencing the user table
-                           roleId BIGINT NOT NULL                          -- Foreign key referencing the role table
+
+CREATE TABLE user_role
+(
+    id     BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    roleId BIGINT NOT NULL
 );
 
--- Adding a unique constraint to ensure each user has only one instance of each role
 ALTER TABLE user_role
     ADD CONSTRAINT user_role_uk UNIQUE (userId, roleId);
 
--- Adding foreign key constraints to maintain referential integrity
 ALTER TABLE user_role
     ADD CONSTRAINT user_role_fk1 FOREIGN KEY (userId)
         REFERENCES sec_user (userId);
