@@ -108,7 +108,6 @@ public class HomeController {
     }
     @GetMapping("/secure/report")
     public String report(Model model) {
-        newtotal= newtotal+totalPrice;
         model.addAttribute("totalPrice", newtotal);
         model.addAttribute("totalcount", count);
 
@@ -261,6 +260,8 @@ public class HomeController {
         totalPrice = 0.0;
         for (Cart cart : cartList) {
             totalPrice += cart.getPrice();
+            newtotal= newtotal+totalPrice;
+
         }
         return totalPrice;
     }
