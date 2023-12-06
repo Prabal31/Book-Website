@@ -21,42 +21,47 @@ public class HomeController {
     @Autowired
     DataBaseAccess da;
 
-    double totalPrice=0.0;
-    double newtotal=0.0;
+    // Variables to track total price, new total, and book count
+    double totalPrice = 0.0;
+    double newtotal = 0.0;
+    int count = 0;
 
-    int count=0;
+    // Lists to store books, user book list, users, and cart items
     List<Book> bookList = new CopyOnWriteArrayList<Book>();
     List<Integer> userbookList = new CopyOnWriteArrayList<>();
-
     List<User> userList = new CopyOnWriteArrayList<User>();
-    int bookid = 0;
-
-    String UserId;
-    String username;
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
+    // Variables to store user details and selected book ID
+    String UserId;
+    String username;
+    int bookid = 0;
+
+    // Helper method to get the current username from the authentication context
     private String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
 
+    // Mapping for login page
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    // Mapping for details page
     @GetMapping("/details")
     public String details(Model model) {
-
         return "details";
     }
 
+    // Mapping for payment page
     @GetMapping("/User/payment")
     public String payments(Model model) {
-
         return "/User/payment";
     }
 
+    // Mapping for order placed page
     @GetMapping("/User/orderplaced")
     public String orderplaced(Model model) {
         da.insertBooksForUser(UserId, userbookList);
@@ -64,6 +69,7 @@ public class HomeController {
         return "/User/orderplaced";
     }
 
+    // Mapping for user profile page
     @GetMapping("/User/yourprofile")
     public String yourprofile(Model model) {
         String username = getCurrentUsername();
@@ -81,14 +87,14 @@ public class HomeController {
         return "/User/yourprofile";
     }
 
+    // Mapping to display book details for a user
     @PostMapping("/User/details/{id}")
     public String Userdetails(Model model, @PathVariable int id) {
-
         model.addAttribute("bookList", da.getBookByID(id));
-
         return "/User/details";
     }
 
+    // Mapping for the home page
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("bookList", da.getbook());
@@ -101,28 +107,28 @@ public class HomeController {
         return "index";
     }
 
+    // Mapping for adding a book (accessible to ROLE_ADMIN)
     @GetMapping("/secure/addbook")
     public String addBook() {
-
         return "/secure/addbook";
     }
+
+    // Mapping for the report page
     @GetMapping("/secure/report")
     public String report(Model model) {
-        newtotal= newtotal+totalPrice;
+        newtotal = newtotal + totalPrice;
         model.addAttribute("totalPrice", newtotal);
         model.addAttribute("totalcount", count);
-
         return "/secure/report";
     }
 
-
+    // Mapping for user registration
     @GetMapping("/register")
     public String register(Model model) {
-
         return "register";
     }
 
-
+    // Mapping for adding a book (accessible to ROLE_ADMIN)
     @PostMapping("/secure/addbook")
     public String addBook(Model model, @ModelAttribute Book book) {
         System.out.println("done");
@@ -137,35 +143,35 @@ public class HomeController {
         return "/secure/bookadded";
     }
 
-
+    // Mapping for displaying the book list (accessible to ROLE_ADMIN)
     @GetMapping("/secure/books")
     public String secureIndex(Model model) {
         model.addAttribute("bookList", da.getbook());
         return "secure/books";
     }
 
+    // Mapping for displaying the book list for users
     @GetMapping("/User/books")
     public String Books(Model model) {
-
         model.addAttribute("bookList", da.getbook());
-
         return "User/books";
     }
+
+    // Mapping for adding a book to the cart
     @PostMapping("/User/addToCart/{id}")
     public String addToCart(@PathVariable int id, RedirectAttributes redirectAttributes) {
         System.out.println("Adding book to cart. Book ID: " + id);
         String username = getCurrentUsername();
         UserId = da.getUserID(username);
+        System.out.println(UserId);
         List<Integer> bookIds = da.getUserbookId(username);
 
         if (bookIds.contains(id)) {
             redirectAttributes.addFlashAttribute("notification", "Book is already Bought.");
             return "redirect:/User/books";
         }
-        if (userbookList.contains(id)) {
-            redirectAttributes.addFlashAttribute("notification", "Book is already in the cart.");
-            return "redirect:/User/books";
-        }
+
+
         // Check if the book is already in the user's cart
         if (da.isBookInUserCart(Integer.parseInt(UserId), id)) {
             redirectAttributes.addFlashAttribute("notification", "Book is already in the cart.");
@@ -184,48 +190,9 @@ public class HomeController {
         return "/User/itemadded";
     }
 
-    @PostMapping("/User/yourprofile/{id}")
-    public String yourprofile(@PathVariable int id, int bookid) {
-
-
-        System.out.println("Book added to cart.");
-        return "/User/itemadded";
-    }
-
-    @PostMapping("/secure/deleteBookById/{id}")
-    public String deleteStudentById(Model model, @PathVariable Long id) {
-        Book book = da.getbook(id).get(0);
-        userbookList.remove(id);
-        da.deleteBookById(id);
-        System.out.println("DOne");
-        model.addAttribute("bookList", da.getbook());
-        return "secure/bookdeleted";
-    }
-
-    @PostMapping("/secure/editBook/{id}")
-    public String showEditForm(@PathVariable long id, Model model) {
-        Book book = da.getbook(id).get(0);
-        model.addAttribute("book", book);
-        return "secure/editBook";
-    }
-    @PostMapping("/secure/edit/{title}")
-    public String editBook(Model model, @PathVariable String title, @ModelAttribute Book updatedBook) {
-        System.out.println("DOne");
-
-        da.updateBookByTitle(title, updatedBook);
-
-        Book book = da.getBookByTitle(title);
-
-        model.addAttribute("bookList", da.getbook());
-        model.addAttribute("book", book);
-
-        return "secure/books"; // Redirect to the book list page after editing
-    }
-
-
+    // Mapping for displaying the user's cart
     @GetMapping("User/cart")
     public String showCart(Model model) {
-
         List<Cart> cartList = da.getCartList();
         double totalPrice = calculateTotalPrice(cartList);
 
@@ -235,42 +202,53 @@ public class HomeController {
         return "User/cart";
     }
 
+    // Mapping for deleting an item from the user's cart (continued)
     @PostMapping("User/deleteCart/{title}")
     public String deleteCartByTitle(Model model, @PathVariable String title) {
 
+        // Delete the item from the cart and update counts
         da.deleteCart(title);
         count--;
-        List<Cart> cartList = da.getCartList(); // Retrieve updated cart items
-        double totalPrice = calculateTotalPrice(cartList); // Recalculate total price
 
+        // Retrieve updated cart items and recalculate total price
+        List<Cart> cartList = da.getCartList();
+        double totalPrice = calculateTotalPrice(cartList);
+
+        // Update the model with the latest cart information
         model.addAttribute("cartList", cartList);
         model.addAttribute("totalPrice", totalPrice);
 
+        // Redirect to the user's cart page
         return "/User/cart";
     }
 
+    // Mapping for displaying the checkout page
     @GetMapping("User/Checkout")
     public String showCheckoutPage() {
+        // Delete the entire cart when proceeding to checkout
         da.deleteCart();
         return "User/Checkout";
     }
 
-
-
+    // Helper method to calculate the total price of items in the cart
     private double calculateTotalPrice(List<Cart> cartList) {
-        totalPrice = 0.0;
         for (Cart cart : cartList) {
             totalPrice += cart.getPrice();
         }
         return totalPrice;
     }
 
+    // Mapping for processing user registration
     @PostMapping("/register")
     public String postRegister(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String username, @RequestParam String password) {
+        // Add user to the database
         da.addUser(first_name, last_name, username, password);
+
+        // Retrieve the user's ID and assign the ROLE_USER role
         Long userId = da.findUserAccount(username).getUserId();
         da.addRole(userId, Long.valueOf(1));
+
+        // Redirect to a page indicating successful user registration
         return "useradded";
     }
-
 }

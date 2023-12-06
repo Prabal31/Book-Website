@@ -1,5 +1,5 @@
 -- data.sql
-
+-- Inserting sample data for books
 INSERT INTO books (title, author, ISBN, price, description) VALUES
     ('Attack on Titan', 'Hajime Isayama', '978-1-4278-1923-1', 29.99,
      'In a world where humanity resides within enormous walled cities to protect themselves from Titans, gigantic humanoid creatures, the story follows Eren Yeager and his friends who join the military to fight the Titans after their hometown is invaded and Erens mother is eaten.');
@@ -66,14 +66,14 @@ INSERT INTO books (title, author, ISBN, price, description) VALUES
 
 
 
-
+-- Inserting sample data for users
 INSERT INTO sec_user (first_name,last_name,email, encryptedPassword, enabled)
 VALUES ('Frank','Kol', 'frank@sge.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
 
 INSERT INTO sec_user (first_name,last_name,email, encryptedPassword, enabled)
 VALUES ('Prabh','Manchanda', 'manchapr@sheridancollege.ca', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
 
-
+-- Inserting sample data for roles
 INSERT INTO sec_role (roleName)
 VALUES ('ROLE_USER');
 
@@ -81,10 +81,10 @@ INSERT INTO sec_role (roleName)
 VALUES ('ROLE_ADMIN');
 
 
-
-INSERT INTO user_role (userId, roleId)
+-- Assigning roles to users
+INSERT INTO user_role (userId, roleId)-- Frank Kol has ROLE_USER
 VALUES (1, 1);
 
-INSERT INTO user_role (userId, roleId)
+INSERT INTO user_role (userId, roleId)-- Prabh Manchanda has ROLE_ADMIN
 VALUES (2, 2);
 

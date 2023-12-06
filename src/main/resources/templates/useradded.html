@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Meta information for character set and viewport -->
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html xmlns:th="http://www.thymeleaf.org">
-        <head>
-        <title>Online Bookstore</title>
+    <title>Online Bookstore</title>
+
+    <!-- Styles to define the look and feel of the page -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +23,7 @@
             color: #333;
         }
 
+        /* Styling for the message container */
         .message-container {
             background-color: #fff;
             padding: 20px;
@@ -30,6 +32,7 @@
             margin-bottom: 20px;
         }
 
+        /* Styling for hyperlinks */
         a {
             text-decoration: none;
             color: #007bff;
@@ -43,16 +46,14 @@
         }
     </style>
 </head>
+
 <body>
+<!-- Container for the success message -->
 <div class="message-container">
     <h1>New User Added</h1>
+    <!-- Link to navigate back to the login page -->
     <a th:href="@{/login}">Go Back</a>
 </div>
 </body>
-</html>
-</title>
-</head>
-<body>
 
-</body>
 </html>

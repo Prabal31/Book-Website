@@ -14,15 +14,18 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // Define the security filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
-        return http.authorizeHttpRequests(authorize -> authorize
+
+        return http
+                .authorizeHttpRequests(authorize -> authorize
+                        // Configure access based on roles
                         .requestMatchers(mvc.pattern("/secure/**")).hasRole("ADMIN")
                         .requestMatchers(mvc.pattern("/User/**")).hasRole("USER")
                         .requestMatchers(mvc.pattern("/**")).permitAll()
@@ -43,13 +46,13 @@ public class SecurityConfig {
                 .build();
     }
 
-
+    // Autowire the custom user details service
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    // Define the password encoder
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
