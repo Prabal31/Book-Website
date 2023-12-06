@@ -1,4 +1,4 @@
-package com.example.a2_prabh.Security;
+package com.example.prabh.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,10 +1,10 @@
-package com.example.a2_prabh;
+package com.example.prabh;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class A2PrabhApplicationTests {
+class PrabhApplicationTests {
 
     @Test
     void contextLoads() {

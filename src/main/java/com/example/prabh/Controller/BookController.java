@@ -1,7 +1,7 @@
-package com.example.a2_prabh.Controller;
+package com.example.prabh.Controller;
 
-import com.example.a2_prabh.Bean.Book;
-import com.example.a2_prabh.DataBase.DataBaseAccess;
+import com.example.prabh.Bean.Book;
+import com.example.prabh.DataBase.DataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

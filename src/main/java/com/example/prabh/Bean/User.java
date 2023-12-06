@@ -1,4 +1,4 @@
-package com.example.a2_prabh.Bean;
+package com.example.prabh.Bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
