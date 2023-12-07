@@ -60,6 +60,7 @@ public class HomeController {
     @GetMapping("/User/orderplaced")
     public String orderplaced(Model model) {
         da.insertBooksForUser(UserId, userbookList);
+        userbookList.clear();
         da.deleteCart();
         return "/User/orderplaced";
     }
@@ -260,9 +261,10 @@ public class HomeController {
         totalPrice = 0.0;
         for (Cart cart : cartList) {
             totalPrice += cart.getPrice();
-            newtotal= newtotal+totalPrice;
+
 
         }
+        newtotal= newtotal+totalPrice;
         return totalPrice;
     }
 
