@@ -104,6 +104,18 @@
         margin-top: 20px;
       }
     }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
   </style>
 </head>
 
@@ -134,5 +146,6 @@
   <a href="#" th:href="@{/register}">Sign Up</a>
 </div>
 </body>
+<footer th:replace="fragments/footer.html:: footer"></footer>
 
 </html>
