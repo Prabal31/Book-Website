@@ -23,16 +23,14 @@ public class HomeController {
 
     double totalPrice=0.0;
     double newtotal=0.0;
-
     int count=0;
-    List<Book> bookList = new CopyOnWriteArrayList<Book>();
-    List<Integer> userbookList = new CopyOnWriteArrayList<>();
-
-    List<User> userList = new CopyOnWriteArrayList<User>();
     int bookid = 0;
-
     String UserId;
     String username;
+
+    List<Book> bookList = new CopyOnWriteArrayList<Book>();
+    List<Integer> userbookList = new CopyOnWriteArrayList<>();
+    List<User> userList = new CopyOnWriteArrayList<User>();
     List<Cart> cartList = new CopyOnWriteArrayList<Cart>();
 
     private String getCurrentUsername() {
